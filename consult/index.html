@@ -16,6 +16,8 @@
 <meta name="twitter:title" content="카드매출 유동화 솔루션 | 세일사이드">
 <meta name="twitter:description" content="카드매출 유동화 상담 안내 — 주식회사 세일사이드. 이용 가능 여부와 조건은 상담 및 검토 후 확정됩니다.">
 <meta name="twitter:image" content="https://3428suni.github.io/salesaid/consult/assets/img/hero.png">
+<script src="config.js"></script>
+<script src="intake-client.js"></script>
 <script src="../assets/support.js"></script>
 </head>
 <body>
@@ -85,20 +87,20 @@
       <img src="assets/img/banner.png" alt="" loading="lazy" style="display:block;width:100%;height:auto;border-radius:4px;margin-bottom:16px">
       <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}"><div style="background:#fff;border-radius:6px;padding:46px 20px;text-align:center"><div style="font-size:21px;font-weight:800;color:#15803D">✓ 상담 예약이 접수되었습니다.</div><p style="color:#666;margin-top:10px;line-height:1.7">접수번호 {{ receipt }}<br>순차적으로 연락드리겠습니다.</p></div></sc-if>
       <sc-if value="{{ notDone }}" hint-placeholder-val="{{ true }}">
-      <div role="status" style="background:#FEF3C7;color:#92400E;border-radius:4px;padding:12px 14px;margin-bottom:10px;font-size:14.5px;line-height:1.65;font-weight:600">현재 상담 접수 시스템을 준비하고 있습니다. 정식 운영 전까지 상담 신청은 접수되지 않습니다.</div>
-      <form onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:10px">
-        <input required name="name" value="{{ f.name }}" onInput="{{ onName }}" autocomplete="name" placeholder="성함" aria-label="성함" style="width:100%;padding:10px;border-radius:4px;border:0;background:#fff;color:#111;font-size:16px;outline:none" style-focus="box-shadow:0 0 0 2px #b39762">
+      <sc-if value="{{ intakeUnavailable }}"><div role="status" style="background:#FEF3C7;color:#92400E;border-radius:4px;padding:12px 14px;margin-bottom:10px;font-size:14.5px;line-height:1.65;font-weight:600">현재 상담 접수 시스템을 준비하고 있습니다. 정식 운영 전까지 상담 신청은 접수되지 않습니다.</div></sc-if>
+      <form id="consult-form" onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:10px">
+        <input required maxlength="80" name="name" value="{{ f.name }}" onInput="{{ onName }}" autocomplete="name" placeholder="성함" aria-label="성함" style="width:100%;padding:10px;border-radius:4px;border:0;background:#fff;color:#111;font-size:16px;outline:none" style-focus="box-shadow:0 0 0 2px #b39762">
         <div role="group" aria-label="휴대폰 번호" style="display:flex;gap:6px;align-items:center;color:#fff">
           <select name="phone1" value="{{ f.p1 }}" onChange="{{ onP1 }}" aria-label="휴대폰 앞자리" style="flex:1.2;min-width:0;padding:10px 6px;border-radius:4px;border:0;background:#fff;color:#111;font-size:16px"><sc-for list="{{ p1Opts }}" as="o" hint-placeholder-count="6"><option>{{ o }}</option></sc-for></select><span aria-hidden="true">-</span>
-          <input required name="phone2" type="tel" inputmode="numeric" maxlength="4" autocomplete="off" aria-label="휴대폰 가운데 번호" value="{{ f.p2 }}" onInput="{{ onP2 }}" style="flex:1;min-width:0;padding:10px;border-radius:4px;border:0;background:#fff;color:#111;font-size:16px;outline:none" style-focus="box-shadow:0 0 0 2px #b39762"><span aria-hidden="true">-</span>
-          <input required name="phone3" type="tel" inputmode="numeric" maxlength="4" autocomplete="off" aria-label="휴대폰 마지막 번호" value="{{ f.p3 }}" onInput="{{ onP3 }}" style="flex:1;min-width:0;padding:10px;border-radius:4px;border:0;background:#fff;color:#111;font-size:16px;outline:none" style-focus="box-shadow:0 0 0 2px #b39762">
+          <input required pattern="{{ phone2Pattern }}" name="phone2" type="tel" inputmode="numeric" maxlength="4" autocomplete="off" aria-label="휴대폰 가운데 번호" value="{{ f.p2 }}" onInput="{{ onP2 }}" style="flex:1;min-width:0;padding:10px;border-radius:4px;border:0;background:#fff;color:#111;font-size:16px;outline:none" style-focus="box-shadow:0 0 0 2px #b39762"><span aria-hidden="true">-</span>
+          <input required pattern="[0-9]{4}" name="phone3" type="tel" inputmode="numeric" maxlength="4" autocomplete="off" aria-label="휴대폰 마지막 번호" value="{{ f.p3 }}" onInput="{{ onP3 }}" style="flex:1;min-width:0;padding:10px;border-radius:4px;border:0;background:#fff;color:#111;font-size:16px;outline:none" style-focus="box-shadow:0 0 0 2px #b39762">
         </div>
-        <textarea name="message" rows="3" placeholder="문의 사항을 남겨 주세요." aria-label="문의 사항" style="width:100%;padding:10px;border-radius:4px;border:0;background:#fff;color:#111;font-size:16px;resize:vertical;outline:none" style-focus="box-shadow:0 0 0 2px #b39762"></textarea>
-        <div style="display:flex;gap:10px;align-items:center;color:#fff;font-size:14px"><input id="consent-box" type="checkbox" checked="{{ consent }}" onChange="{{ onConsent }}" style="width:22px;height:22px;accent-color:#b39762;flex:none;cursor:pointer"><span><label for="consent-box" style="cursor:pointer">[필수]</label> <button type="button" id="consent-open" onClick="{{ openModal }}" style="border:0;background:none;padding:0;color:#e3c88c;font:inherit;text-decoration:underline;cursor:pointer">[개인정보수집ㆍ이용 동의]</button></span></div>
+        <textarea maxlength="5000" value="{{ f.message }}" onInput="{{ onMessage }}" name="message" rows="3" placeholder="문의 사항을 남겨 주세요." aria-label="문의 사항" style="width:100%;padding:10px;border-radius:4px;border:0;background:#fff;color:#111;font-size:16px;resize:vertical;outline:none" style-focus="box-shadow:0 0 0 2px #b39762"></textarea>
+        <div style="display:flex;gap:10px;align-items:center;color:#fff;font-size:14px"><input id="consent-box" required name="consent_required" value="true" type="checkbox" checked="{{ consent }}" onChange="{{ onConsent }}" style="width:22px;height:22px;accent-color:#b39762;flex:none;cursor:pointer"><span><label for="consent-box" style="cursor:pointer">[필수]</label> <button type="button" id="consent-open" onClick="{{ openModal }}" style="border:0;background:none;padding:0;color:#e3c88c;font:inherit;text-decoration:underline;cursor:pointer">[개인정보수집ㆍ이용 동의]</button></span></div>
         <sc-if value="{{ needConsent }}" hint-placeholder-val="{{ true }}"><div style="color:#fca5a5;font-size:13px">개인정보 수집·이용에 동의하셔야 신청 버튼이 활성화됩니다.</div></sc-if>
         <sc-if value="{{ isOffline }}" hint-placeholder-val="{{ false }}"><div role="alert" style="background:#FEF3C7;color:#92400E;border-radius:4px;padding:12px 14px;font-size:14px;line-height:1.65"><b>현재 상담 접수 시스템 준비 중입니다.</b><br>신청 내용은 접수되지 않았습니다. 급하신 경우 02-6418-1040으로 전화해 주세요.</div></sc-if>
-        <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}"><div role="alert" style="background:#FEE2E2;color:#991B1B;border-radius:4px;padding:12px 14px;font-size:14px;line-height:1.65"><b>일시적인 오류로 접수하지 못했습니다.</b><br>잠시 후 다시 시도해 주세요.</div></sc-if>
-        <button type="submit" disabled="{{ cantSubmit }}" style="margin-top:4px;width:100%;padding:15px;border:0;border-radius:4px;background:#b39762;color:#fff;font-size:17.6px;font-weight:700;cursor:pointer;opacity:{{ btnOp }};transition:background .3s" style-hover="background:#917646">{{ btnText }}</button>
+        <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}"><div role="alert" style="background:#FEE2E2;color:#991B1B;border-radius:4px;padding:12px 14px;font-size:14px;line-height:1.65">{{ errorMessage }}</div></sc-if>
+        <label aria-hidden="true" style="position:absolute;left:-10000px">웹사이트<input name="website" tabindex="-1" autocomplete="off"></label><button type="submit" disabled="{{ cantSubmit }}" style="margin-top:4px;width:100%;padding:15px;border:0;border-radius:4px;background:#b39762;color:#fff;font-size:17.6px;font-weight:700;cursor:pointer;opacity:{{ btnOp }};transition:background .3s" style-hover="background:#917646">{{ btnText }}</button>
       </form></sc-if>
     </div>
   </div>
@@ -141,10 +143,11 @@
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   CLAIMS_ORIGINAL = true;
-  state = { f: { name: '', p1: '010', p2: '', p3: '' }, consent: false, modal: false, sending: false, formState: '', receipt: '' };
+  state = { f: { name: '', p1: '010', p2: '', p3: '', message: '' }, consent: false, modal: false, sending: false, formState: '', receipt: '', errorMessage: '', acceptedAt: '', ready: false };
   componentDidMount() {
     document.title = '카드매출 유동화 솔루션 | 세일사이드';
     this.attribution();
+    if(window.SalesaidConsult?.enabled())window.SalesaidConsult.prepare().then(()=>this.setState({ready:true})).catch(()=>this.setState({ready:false}));
     this._kd = e => { if (!this.state.modal) return; if (e.key === 'Escape') this.closeModal(); else if (e.key === 'Tab') { const a = document.getElementById('consent-close'), b = document.getElementById('consent-ok'); if (e.shiftKey && document.activeElement === a) { e.preventDefault(); b && b.focus(); } else if (!e.shiftKey && document.activeElement === b) { e.preventDefault(); a && a.focus(); } } };
     document.addEventListener('keydown', this._kd);
   }
@@ -154,7 +157,18 @@ class Component extends DCLogic {
   }
   scrollTo(id) { const el = document.getElementById(id); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 16, behavior: 'smooth' }); }
   closeModal() { this.setState({ modal: false }, () => { const b = document.getElementById('consent-open'); if (b) b.focus(); }); }
-  async submitForm() { this.setState({ formState: 'offline' }); }
+  async submitForm(form) {
+    if(!window.SalesaidConsult?.enabled()){this.setState({formState:'offline'});return;}
+    if(this._pending)return;this._pending=true;
+    // Capture native form/autofill values before rendering the busy state.
+    const formData=new FormData(form);const copied=document.createElement('form');for(const [name,value]of formData){const input=document.createElement('input');input.name=name;input.value=String(value);copied.append(input);}
+    this.setState({sending:true,formState:'',errorMessage:''});
+    try{const receipt=await window.SalesaidConsult.submit(copied,this.state.acceptedAt);this.setState({formState:'done',receipt,f:{name:'',p1:'010',p2:'',p3:'',message:''},consent:false,acceptedAt:''});}
+    catch(e){this.setState({formState:'error',errorMessage:e.message||'접수하지 못했습니다. 같은 내용으로 다시 시도하세요.'});}
+    finally{this._pending=false;this.setState({sending:false});}
+  }
+  captureForm(){const form=document.getElementById('consult-form');if(!form)return this.state.f;const f=new FormData(form);return {name:String(f.get('name')||''),p1:String(f.get('phone1')||'010'),p2:String(f.get('phone2')||''),p3:String(f.get('phone3')||''),message:String(f.get('message')||'')};}
+
   renderVals() {
     const S = this.state, F = S.f, O = this.CLAIMS_ORIGINAL;
     const valid = F.name.trim().length > 0 && /^01[016789]$/.test(F.p1) && /^\d{3,4}$/.test(F.p2) && /^\d{4}$/.test(F.p3);
@@ -183,19 +197,21 @@ class Component extends DCLogic {
       t, toContact: e => { e.preventDefault(); this.scrollTo('contact'); },
       table: [['대상고객', '신용카드매출이 발생하는 개인(법인)사업자'], ['연 령', '20세(군필자) 이상 ~'], ['신용등급', 'NICE, KCB 등급 무관'], ['사업년수', '3개월이상 (신규 창업자 상담후 진행가능)'], ['월 매출', '월 가맹점 카드매출 1,500만원 이상 (예외가능)'], ['장래매출 유동화\n매입금액', '500만원 ~ 5,000만원 (임대차 보증금 이내 / 5,000만원 이상 예외가능)\n일매출*10배~20배 (카드매출 및 현금매출, 배달매출 포함 / 예외가능)'], ['유동화수수료', '정율제 또는 정액제 (업종별 유동화 금액별 상이)'], ['장래매출채권 매입', '5% ~'], ['중도상환수수료', '없음'], ['유동화기간', '100일 ~ 200일 이내'], ['상환방식', '신용카드매출에서 상환'], ['취급제한', '다단계 업종, 유흥업종, 부동산관련 개발 및 시행업, 방문판매업, 무점포 사업장, 상품권, 매일 카드매출이 발생되지 않는 사업장 등']].map(([k, v]) => ({ k, lines: v.split('\n').map((t, i) => ({ t, bt: i ? '1px solid #222' : '0' })) })),
       f: F, onName: e => this.setState(s => ({ f: { ...s.f, name: e.target.value } })),
-      p1Opts: ['010', '011', '016', '017', '018', '019'], onP1: e => this.setState(s => ({ f: { ...s.f, p1: e.target.value } })),
+      phone2Pattern:F.p1==='010'?'[0-9]{4}':'[0-9]{3,4}', p1Opts: ['010', '011', '016', '017', '018', '019'], onP1: e => this.setState(s => ({ f: { ...s.f, p1: e.target.value } })),
       onP2: e => { const v = e.target.value.replace(/\D/g, '').slice(0, 4); this.setState(s => ({ f: { ...s.f, p2: v } })); },
       onP3: e => { const v = e.target.value.replace(/\D/g, '').slice(0, 4); this.setState(s => ({ f: { ...s.f, p3: v } })); },
-      consent: S.consent, needConsent: !S.consent, onConsent: e => this.setState({ consent: e.target.checked }),
-      openModal: () => this.setState({ modal: true }, () => { const b = document.getElementById('consent-close'); if (b) b.focus(); }),
+      onMessage:e=>this.setState(s=>({f:{...s.f,message:e.target.value}})), intakeUnavailable:!window.SalesaidConsult?.enabled(), errorMessage:S.errorMessage,
+      consent: S.consent, needConsent: !S.consent, onConsent:e=>this.setState({f:this.captureForm(),consent:e.target.checked,acceptedAt:e.target.checked?new Date().toISOString():''}),
+      openModal: () => this.setState({ f:this.captureForm(),modal: true }, () => { const b = document.getElementById('consent-close'); if (b) b.focus(); }),
       closeModal: () => this.closeModal(), stop: e => e.stopPropagation(),
-      agreeModal: () => this.setState({ consent: true, modal: false }, () => { const b = document.getElementById('consent-open'); if (b) b.focus(); }), modal: S.modal,
+      agreeModal: () => this.setState({ consent: true,acceptedAt:new Date().toISOString(),modal: false }, () => { const b = document.getElementById('consent-open'); if (b) b.focus(); }), modal: S.modal,
       isDone: S.formState === 'done', notDone: S.formState !== 'done', isOffline: S.formState === 'offline', isError: S.formState === 'error', receipt: S.receipt,
-      cantSubmit: true, btnOp: 0.5, btnText: S.sending ? '접수 중…' : '상담 예약하기',
-      submit: e => { e.preventDefault(); if (S.sending || !S.consent) return; if (!valid) { const f = e.target; (F.name.trim() ? (/^\d{3,4}$/.test(F.p2) ? f.elements.phone3 : f.elements.phone2) : f.elements.name).focus(); return; } this.submitForm(e.target); }
+      cantSubmit:!window.SalesaidConsult?.enabled()||!S.consent||S.sending, btnOp:(!window.SalesaidConsult?.enabled()||!S.consent||S.sending)?0.5:1, btnText: S.sending ? '접수 중…' : '상담 예약하기',
+      submit:e=>{e.preventDefault();if(S.sending||!S.consent)return;return this.submitForm(e.currentTarget||e.target);}
     };
   }
 }
 </script>
 </body>
 </html>
+
