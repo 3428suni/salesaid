@@ -87,7 +87,7 @@
   <div class="cl-form" style="background:rgba(0,0,0,.6);border:1px solid rgba(179,151,98,.3);border-radius:8px;padding:30px 20px">
     <div style="max-width:600px;margin:0 auto">
       <img src="assets/img/banner.png" alt="" loading="lazy" style="display:block;width:100%;height:auto;border-radius:4px;margin-bottom:16px">
-      <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}"><div style="background:#fff;border-radius:6px;padding:46px 20px;text-align:center"><div style="font-size:21px;font-weight:800;color:#15803D">✓ 상담 예약이 접수되었습니다.</div><p style="color:#666;margin-top:10px;line-height:1.7">접수번호 {{ receipt }}<br>순차적으로 연락드리겠습니다.</p></div></sc-if>
+      <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}"><div style="background:#fff;border-radius:6px;padding:46px 20px;text-align:center"><div style="font-size:21px;font-weight:800;color:#15803D">✓ 상담 예약이 접수되었습니다.</div><p style="color:#666;margin-top:10px;line-height:1.7">순차적으로 연락드리겠습니다.</p></div></sc-if>
       <sc-if value="{{ notDone }}" hint-placeholder-val="{{ true }}">
       <sc-if value="{{ intakeUnavailable }}"><div role="status" style="background:#FEF3C7;color:#92400E;border-radius:4px;padding:12px 14px;margin-bottom:10px;font-size:14.5px;line-height:1.65;font-weight:600">현재 상담 접수 시스템을 준비하고 있습니다. 정식 운영 전까지 상담 신청은 접수되지 않습니다.</div></sc-if>
       <form id="consult-form" onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:10px">
