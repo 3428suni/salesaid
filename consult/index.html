@@ -16,6 +16,8 @@
 <meta name="twitter:title" content="카드매출 유동화 솔루션 | 세일사이드">
 <meta name="twitter:description" content="카드매출 유동화 상담 안내 — 주식회사 세일사이드. 이용 가능 여부와 조건은 상담 및 검토 후 확정됩니다.">
 <meta name="twitter:image" content="https://3428suni.github.io/salesaid/consult/assets/img/hero.png">
+<script src="../assets/published-release.js"></script>
+<script src="../assets/published-content.js"></script>
 <script src="config.js"></script>
 <script src="intake-client.js"></script>
 <script src="../assets/support.js"></script>
@@ -193,7 +195,7 @@ class Component extends DCLogic {
     };
     const NA = '사업장별 상담 후 안내';
     t.problems = t.problems.map((x, i, arr) => ({ t: x, bb: i < arr.length - 1 ? '1px solid #eee' : '0' }));
-    return {
+    return window.SalesaidPublished.applyLanding({
       t, toContact: e => { e.preventDefault(); this.scrollTo('contact'); },
       table: [['대상고객', '신용카드매출이 발생하는 개인(법인)사업자'], ['연 령', '20세(군필자) 이상 ~'], ['신용등급', 'NICE, KCB 등급 무관'], ['사업년수', '3개월이상 (신규 창업자 상담후 진행가능)'], ['월 매출', '월 가맹점 카드매출 1,500만원 이상 (예외가능)'], ['장래매출 유동화\n매입금액', '500만원 ~ 5,000만원 (임대차 보증금 이내 / 5,000만원 이상 예외가능)\n일매출*10배~20배 (카드매출 및 현금매출, 배달매출 포함 / 예외가능)'], ['유동화수수료', '정율제 또는 정액제 (업종별 유동화 금액별 상이)'], ['장래매출채권 매입', '5% ~'], ['중도상환수수료', '없음'], ['유동화기간', '100일 ~ 200일 이내'], ['상환방식', '신용카드매출에서 상환'], ['취급제한', '다단계 업종, 유흥업종, 부동산관련 개발 및 시행업, 방문판매업, 무점포 사업장, 상품권, 매일 카드매출이 발생되지 않는 사업장 등']].map(([k, v]) => ({ k, lines: v.split('\n').map((t, i) => ({ t, bt: i ? '1px solid #222' : '0' })) })),
       f: F, onName: e => this.setState(s => ({ f: { ...s.f, name: e.target.value } })),
@@ -208,7 +210,7 @@ class Component extends DCLogic {
       isDone: S.formState === 'done', notDone: S.formState !== 'done', isOffline: S.formState === 'offline', isError: S.formState === 'error', receipt: S.receipt,
       cantSubmit:!window.SalesaidConsult?.enabled()||!S.consent||S.sending, btnOp:(!window.SalesaidConsult?.enabled()||!S.consent||S.sending)?0.5:1, btnText: S.sending ? '접수 중…' : '상담 예약하기',
       submit:e=>{e.preventDefault();if(S.sending||!S.consent)return;return this.submitForm(e.currentTarget||e.target);}
-    };
+    }, window.SALESAID_PUBLISHED);
   }
 }
 </script>

@@ -15,6 +15,8 @@
 <meta name="twitter:title" content="세일사이드 | 사업자 자금 운용을 지원하는 금융 솔루션 파트너">
 <meta name="twitter:description" content="카드매출 선정산과 장래매출채권 유동화를 통해 사업자의 자금 운용 가능성을 안내하는 주식회사 세일사이드입니다.">
 <meta name="twitter:image" content="https://3428suni.github.io/salesaid/assets/img/og-image.png">
+<script src="assets/published-release.js"></script>
+<script src="assets/published-content.js"></script>
 <script src="assets/support.js"></script>
 </head>
 <body>
@@ -112,6 +114,11 @@ input,select,textarea{font-size:16px!important}
 <div style="padding:24px;display:flex;flex-direction:column;gap:12px;flex:1"><div style="font-size:22px;font-weight:800;color:#0B1020">{{ c.t }}</div><div style="color:#6b7280;line-height:1.65">{{ c.d }}</div>
 <a href="#" onClick="{{ c.go }}" style="margin-top:auto;border:1.5px solid #D7192D;color:#B81324;text-align:center;padding:13px;border-radius:10px;font-weight:700" style-hover="background:#D7192D;color:#fff">자세히 보기 →</a></div></div></sc-for>
 </div></div></section>
+
+<sc-if value="{{ hasPublishedFaqs }}"><section style="background:#F5F8FC;padding:64px 5vw"><div style="max-width:1100px;margin:auto"><h2>자주 묻는 질문</h2><sc-for list="{{ publishedFaqs }}" as="f"><div style="background:#fff;border-radius:16px;padding:24px;margin-top:14px"><h3>{{ f.q }}</h3><p style="line-height:1.8;white-space:pre-line">{{ f.a }}</p></div></sc-for></div></section></sc-if>
+<sc-if value="{{ hasPublishedCases }}"><section style="background:#fff;padding:64px 5vw"><div style="max-width:1100px;margin:auto"><h2>성공사례</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:22px"><sc-for list="{{ publishedCases }}" as="c"><article style="background:#F5F8FC;border-radius:16px;padding:24px"><sc-if value="{{ c.img }}"><div role="img" style="width:100%;aspect-ratio:4/3;border-radius:12px;background:center/cover no-repeat;background-image:{{ c.bg }}"></div></sc-if><h3>{{ c.place }}</h3><p>{{ c.job }}</p><p style="white-space:pre-line">{{ c.desc }}</p><p>{{ c.amt }} · {{ c.cond }}</p></article></sc-for></div></div></section></sc-if>
+<sc-if value="{{ hasPublishedReviews }}"><section style="background:#F5F8FC;padding:64px 5vw"><div style="max-width:1100px;margin:auto"><h2>고객 후기</h2><sc-for list="{{ publishedReviews }}" as="r"><article style="background:#fff;border-radius:16px;padding:24px;margin-top:14px"><h3>{{ r.name }}</h3><p>{{ r.meta }}</p><p style="white-space:pre-line">{{ r.text }}</p></article></sc-for></div></section></sc-if>
+<sc-if value="{{ hasPublishedPartners }}"><section style="background:#fff;padding:64px 5vw"><div style="max-width:1100px;margin:auto"><h2>제휴 파트너</h2><div style="display:flex;flex-wrap:wrap;gap:22px"><sc-for list="{{ publishedPartners }}" as="p"><article style="background:#F5F8FC;border-radius:16px;padding:24px"><sc-if value="{{ p.img }}"><div role="img" style="width:160px;height:80px;background:center/contain no-repeat;background-image:{{ p.bg }}"></div></sc-if><h3>{{ p.name }}</h3><p style="white-space:pre-line">{{ p.info }}</p></article></sc-for></div></div></section></sc-if>
 <section style="background:#fff;padding:100px 5vw"><div style="max-width:1100px;margin:0 auto">
 <div style="text-align:center;margin-bottom:44px"><div style="font-size:14px;font-weight:700;color:#D7192D;letter-spacing:1.5px">전문성과 가치</div><h2 style="font-size:clamp(26px,3.4vw,40px);font-weight:800;color:#0B1020;margin:12px 0 14px;letter-spacing:-1px;line-height:1.3">경험을 바탕으로 이해하고, <span style="color:#D7192D">신뢰를 바탕으로 안내합니다.</span></h2></div>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:22px"><sc-for list="{{ expertise }}" as="w" hint-placeholder-count="3"><div style="background:#F5F8FC;border-radius:16px;padding:30px 28px"><div style="font-size:30px;font-weight:800;color:#D7192D">{{ w.n }}</div><h3 style="font-size:20px;font-weight:800;color:#0B1020;margin:10px 0 10px;line-height:1.4">{{ w.t }}</h3><p style="margin:0;color:#4b5563;line-height:1.8;font-size:15px">{{ w.d }}</p></div></sc-for></div>
@@ -121,6 +128,7 @@ input,select,textarea{font-size:16px!important}
 
 <sc-if value="{{ isProd }}" hint-placeholder-val="{{ false }}">
 <section style="background:#fff;padding:100px 5vw"><div style="max-width:780px;margin:0 auto;text-align:center"><div style="font-size:14px;font-weight:700;color:#D7192D;letter-spacing:1.5px">상품 소개</div><h2 style="font-size:clamp(26px,3.4vw,40px);font-weight:800;color:#0B1020;margin:12px 0 22px;letter-spacing:-1px;line-height:1.3">{{ pg.defH }}</h2><sc-for list="{{ pg.defPs }}" as="t" hint-placeholder-count="3"><p style="margin:0 0 16px;font-size:18px;color:#4b5563;line-height:1.9"><sc-for list="{{ t.segs }}" as="g" hint-placeholder-count="1"><span style="font-weight:{{ g.w }};color:{{ g.c }}">{{ g.x }}</span></sc-for></p></sc-for></div></section>
+<sc-if value="{{ hasPublishedProductTerms }}"><section style="background:#fff;padding:40px 5vw"><div style="max-width:1000px;margin:auto"><h2>상품 이용 조건</h2><sc-for list="{{ publishedProductTerms }}" as="p"><div style="padding:14px;border-bottom:1px solid #e5e7eb"><b>{{ p.label }}</b><p style="white-space:pre-line">{{ p.text }}</p></div></sc-for></div></section></sc-if>
 <section id="proc" style="background:#F5F8FC;padding:100px 5vw"><div style="max-width:1000px;margin:0 auto">
 <div style="text-align:center;margin-bottom:40px"><div style="font-size:14px;font-weight:700;color:#D7192D;letter-spacing:1.5px">진행 절차</div><h2 style="font-size:clamp(26px,3.4vw,40px);font-weight:800;color:#0B1020;margin:12px 0 0;letter-spacing:-1px;line-height:1.3">이렇게 <span style="color:#D7192D">진행됩니다</span></h2></div>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:18px"><sc-for list="{{ pg.steps3 }}" as="s" hint-placeholder-count="3"><div style="background:#fff;border:.8px solid #E6E9F0;border-radius:16px;padding:28px 24px"><span style="width:40px;height:40px;border-radius:50%;background:#D7192D;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center">{{ s.n }}</span><div style="margin-top:16px;font-weight:800;font-size:19px;color:#0B1020">{{ s.t }}</div><div style="margin-top:8px;color:#6b7280;line-height:1.7;font-size:15px">{{ s.d }}</div></div></sc-for></div>
@@ -133,7 +141,7 @@ input,select,textarea{font-size:16px!important}
   <div style="max-width:900px;margin:0 auto">
     <div style="font-size:14px;font-weight:700;color:#F0414F;letter-spacing:3px">ABOUT US</div>
     <h1 style="font-size:clamp(32px,4.6vw,50px);font-weight:800;line-height:1.25;letter-spacing:-1.5px;margin:16px 0 36px">비즈니스의 안정적인 성장,<br><span style="color:#F0414F">세일사이드</span>가 함께합니다.</h1>
-    <div style="aspect-ratio:21/9;border-radius:20px;background-image:url(assets/img/img-3.png);background-size:cover;background-repeat:no-repeat;background-position:center 30%;box-shadow:0 30px 60px rgba(0,0,0,.5);margin-bottom:40px"></div>
+    <div style="aspect-ratio:21/9;border-radius:20px;background-image:{{ aboutBackground }};background-size:cover;background-repeat:no-repeat;background-position:center 30%;box-shadow:0 30px 60px rgba(0,0,0,.5);margin-bottom:40px"></div>
     <div style="display:flex;flex-direction:column;gap:20px;font-size:17px;line-height:1.85;color:rgba(255,255,255,.82);max-width:760px"><sc-for list="{{ aboutPs }}" as="t" hint-placeholder-count="3"><p style="margin:0">{{ t }}</p></sc-for></div>
   </div>
 </section>
@@ -151,7 +159,7 @@ input,select,textarea{font-size:16px!important}
 <section style="background:#fff;padding:100px 5vw">
   <div style="max-width:1000px;margin:0 auto;text-align:center">
     <div style="font-size:14px;font-weight:700;color:#D7192D;letter-spacing:3px">OUR VALUE</div>
-    <h2 style="font-size:clamp(26px,3.4vw,38px);font-weight:800;color:#0B1020;margin:12px 0 44px;letter-spacing:-1px;line-height:1.35">단순한 자금 솔루션을 넘어,<br>비즈니스의 <span style="color:#D7192D">든든한 파트너</span>로</h2>
+    <h2 style="font-size:clamp(26px,3.4vw,38px);font-weight:800;color:#0B1020;margin:12px 0 44px;letter-spacing:-1px;line-height:1.35"><sc-if value="{{ publishedAboutValue }}"><span>{{ publishedValue }}</span></sc-if><sc-if value="{{ originalAboutValue }}">단순한 자금 솔루션을 넘어,<br>비즈니스의 <span style="color:#D7192D">든든한 파트너</span>로</sc-if></h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));gap:28px;text-align:left">
       <sc-for list="{{ values }}" as="v" hint-placeholder-count="3"><div style="border-left:3px solid #D7192D;padding:4px 0 4px 20px"><div style="font-weight:800;font-size:19px;color:#0B1020;margin-bottom:8px">{{ v.t }}</div><div style="color:#6b7280;line-height:1.7;font-size:15px">{{ v.d }}</div></div></sc-for>
     </div>
@@ -161,7 +169,7 @@ input,select,textarea{font-size:16px!important}
 <section style="background:#0B0F1A;color:#fff;padding:110px 5vw;text-align:center">
   <div style="max-width:800px;margin:0 auto">
     <div style="font-size:14px;font-weight:700;color:#F0414F;letter-spacing:3px">OUR VISION</div>
-    <h2 style="font-size:clamp(26px,3.4vw,38px);font-weight:800;margin:12px 0 22px;letter-spacing:-1px;line-height:1.35">사업자의 오늘을 이해하고,<br>더 나은 내일을 함께합니다.</h2>
+    <h2 style="font-size:clamp(26px,3.4vw,38px);font-weight:800;margin:12px 0 22px;letter-spacing:-1px;line-height:1.35"><sc-if value="{{ publishedAboutVision }}"><span>{{ publishedVision }}</span></sc-if><sc-if value="{{ originalAboutVision }}">사업자의 오늘을 이해하고,<br>더 나은 내일을 함께합니다.</sc-if></h2>
     <div style="width:48px;height:3px;background:#D7192D;margin:0 auto 30px"></div>
     <p style="color:rgba(255,255,255,.8);line-height:1.9;font-size:17px;margin:0">세일사이드는 금융에 대한 이해와 사업 현장에 대한 관심을 바탕으로, 사업자가 더욱 안정적으로 사업을 운영할 수 있도록 돕는 파트너가 되고자 합니다.</p>
   </div>
@@ -247,7 +255,7 @@ class Component extends DCLogic {
     };
     const navDef = [['홈', 'home'], ['카드매출 선정산', 'card'], ['장래매출채권 유동화', 'fut'], ['회사소개', 'about']];
     const inP = P === 'card' || P === 'fut';
-    return {
+    return window.SalesaidPublished.applyHome({
       goHome: this.go('home'), goProd: this.go('card'), mOpen: S.mOpen ? 'true' : 'false', toggleMenu: () => this.setState(s => ({ mOpen: !s.mOpen })),
       footCard: this.go('card'), footFut: this.go('fut'),
       onFab: e => { e.preventDefault(); if (this.LANDING_PAGE_URL) window.location.href = this.LANDING_PAGE_URL; else this.flash('상담 신청 페이지 준비 중입니다.'); },
@@ -263,7 +271,7 @@ class Component extends DCLogic {
       whyPs: [B('세일사이드는 은행권 근무 경험을 갖춘 전문 인력이 고객 상담에 직접 참여하여 사업장의 매출 현황과 자금 운용 상황을 함께 살펴봅니다.', '세일사이드는 전문 인력이 고객 상담에 직접 참여하여 사업장의 매출 현황과 자금 운용 상황을 함께 살펴봅니다.'), '복잡하게 느껴질 수 있는 금융 용어와 진행 절차를 이해하기 쉽게 설명하고, 고객이 이용 조건을 충분히 확인한 후 판단할 수 있도록 돕습니다.', '과장된 약속보다 정확한 설명과 신뢰할 수 있는 상담을 중요하게 생각합니다.'],
       why3: [{ n: '01', e: 'TRUST & EXPERTISE', t: B('금융 실무 경험을 바탕으로 한 전문적인 안내', '전문적인 경험을 바탕으로 한 안내'), d: B('은행권 실무 경험을 갖춘 담당자가 고객의 사업 상황을 이해하고, 매출 구조와 자금 운용에 관한 상담을 지원합니다.', '담당자가 고객의 사업 상황을 이해하고, 매출 구조와 자금 운용에 관한 상담을 지원합니다.') }, { n: '02', e: 'CLEAR & TRANSPARENT', t: '쉽고 투명한 상품 설명', d: '어려운 금융 용어와 진행 절차를 쉽게 설명하고, 고객이 계약 조건을 충분히 이해할 수 있도록 안내합니다.' }, { n: '03', e: 'BUSINESS FIRST', t: '사업자의 입장에서 생각하는 상담', d: '사업장마다 다른 매출 흐름과 자금 수요를 이해하고, 상황에 적합한 활용 가능성을 검토합니다.' }],
       values: [{ t: '신뢰를 바탕으로 한 상담', d: '충분한 설명과 확인을 바탕으로 고객이 판단할 수 있도록 돕습니다.' }, { t: '효율적인 자금 운용 안내', d: '사업장의 매출 흐름에 맞는 자금 활용 방안을 안내합니다.' }, { t: '사업자의 지속 가능한 성장 지원', d: '자금 고민을 덜고 본업에 집중할 수 있도록 함께합니다.' }]
-    };
+    }, P, this.go.bind(this), window.SALESAID_PUBLISHED);
   }
 }
 </script>
