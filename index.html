@@ -260,8 +260,8 @@ class Component extends DCLogic {
       goHome: this.go('home'), goProd: this.go('card'), mOpen: S.mOpen ? 'true' : 'false', toggleMenu: () => this.setState(s => ({ mOpen: !s.mOpen })),
       footCard: this.go('card'), footFut: this.go('fut'),
       // Keep ?utm_… on the way to the landing page so its attribution sees the ad visit.
-      landingHref: this.LANDING_PAGE_URL ? this.LANDING_PAGE_URL + window.location.search : '#',
-      onFab: e => { e.preventDefault(); if (this.LANDING_PAGE_URL) window.location.href = this.LANDING_PAGE_URL + window.location.search; else this.flash('상담 신청 페이지 준비 중입니다.'); },
+      landingHref: this.LANDING_PAGE_URL ? this.LANDING_PAGE_URL + (window.location?.search || '') : '#',
+      onFab: e => { e.preventDefault(); if (this.LANDING_PAGE_URL) window.location.href = this.LANDING_PAGE_URL + (window.location.search || ''); else this.flash('상담 신청 페이지 준비 중입니다.'); },
       toast: !!S.toast, toastMsg: S.toast,
       nav: navDef.map(([t, p]) => { const on = P === p; return { t, color: on ? '#D7192D' : '#1F2937', bd: on ? '#D7192D' : 'transparent', cur: on ? 'page' : 'false', go: this.go(p) }; }),
       isHome: P === 'home', isProd: inP, isAbout: P === 'about', showHero: P !== 'about',
