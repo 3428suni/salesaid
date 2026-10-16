@@ -23,13 +23,13 @@
 <x-dc>
 <helmet>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-<style>html{scroll-behavior:smooth}body{word-break:keep-all;margin:0;font-family:Pretendard,'Noto Sans KR',sans-serif;color:#1F2937;background:#fff}a{color:#B81324;text-decoration:none}a:hover{color:#9E0F1E}*{box-sizing:border-box}input,select,textarea,button{font-family:inherit}@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}@keyframes mqL{to{transform:translateX(-50%)}}@keyframes mqR{from{transform:translateX(-50%)}to{transform:translateX(0)}}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(215,25,45,.5)}70%{box-shadow:0 0 0 18px rgba(215,25,45,0)}100%{box-shadow:0 0 0 0 rgba(215,25,45,0)}}.hd-burger{display:none}.m-only{display:none}
+<style>html{scroll-behavior:smooth}body{word-break:keep-all;margin:0;font-family:Pretendard,'Noto Sans KR',sans-serif;color:#1F2937;background:#fff}a{color:#B81324;text-decoration:none}a:hover{color:#9E0F1E}*{box-sizing:border-box}input,select,textarea,button{font-family:inherit}@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}@keyframes mqL{to{transform:translateX(-50%)}}@keyframes mqR{from{transform:translateX(-50%)}to{transform:translateX(0)}}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(215,25,45,.5)}70%{box-shadow:0 0 0 18px rgba(215,25,45,0)}100%{box-shadow:0 0 0 0 rgba(215,25,45,0)}}.hd-burger{display:none}.m-only{display:none}.hd-cta{display:inline-flex;align-items:center;justify-content:center;flex:none;background:#D7192D;color:#fff!important;font-size:15px;font-weight:800;line-height:1;letter-spacing:-.2px;padding:12px 22px;border-radius:10px;white-space:nowrap;text-decoration:none;box-shadow:0 6px 16px rgba(215,25,45,.24);transition:background .2s,box-shadow .2s,transform .15s}.hd-cta:hover{background:#B81324;color:#fff!important;box-shadow:0 8px 20px rgba(215,25,45,.32)}.hd-cta:active{transform:translateY(1px) scale(.98)}.hd-cta:focus-visible{outline:3px solid #0B0F1A;outline-offset:2px}@media (min-width:861px){.hd-nav{margin-left:auto}}
 @media (max-width:860px){
 html{overflow-x:hidden}body{overflow-x:clip}
 header{padding:4px 16px!important;gap:0!important}
 header img{width:112px!important;height:46px!important}
 .hd-burger{display:flex!important;margin-left:auto;width:44px;height:44px;border:0;background:transparent;align-items:center;justify-content:center;font-size:26px;cursor:pointer;color:#0B0F1A;order:2}
-.hd-cta{display:none!important}.hd-admin{order:1;margin-left:auto}.hd-admin+.hd-burger{margin-left:4px}
+.hd-cta{order:1;margin-left:auto;padding:10px 14px!important;font-size:14px!important;border-radius:9px!important}.hd-cta+.hd-burger{margin-left:4px}.hd-admin{order:1;margin-left:auto}.hd-admin+.hd-burger{margin-left:4px}
 .hd-nav{display:none!important;order:10;width:100%;flex-direction:column!important;align-items:stretch!important;gap:0!important;padding:6px 0 12px;border-top:1px solid #eee;margin-top:4px}
 .hd-nav[data-open="true"]{display:flex!important}
 .hd-nav a{padding:14px 4px!important;border-bottom:1px solid #f1f2f5!important;font-size:16px}
@@ -72,6 +72,7 @@ input,select,textarea{font-size:16px!important}
   <nav class="hd-nav" data-open="{{ mOpen }}" style="display:flex;gap:clamp(16px,2.2vw,30px);flex-wrap:nowrap;align-items:center;font-size:15px;font-weight:600">
     <sc-for list="{{ nav }}" as="n" hint-placeholder-count="4"><a href="#" onClick="{{ n.go }}" aria-current="{{ n.cur }}" style="color:{{ n.color }};white-space:nowrap;display:block;padding:8px 0;border-bottom:2px solid {{ n.bd }}">{{ n.t }}</a></sc-for>
       </nav>
+      <a class="hd-cta" href="{{ landingHref }}" onClick="{{ onFab }}">상담예약</a>
       <button class="hd-burger" onClick="{{ toggleMenu }}" aria-label="메뉴">☰</button>
 </header>
 
@@ -258,7 +259,9 @@ class Component extends DCLogic {
     return window.SalesaidPublished.applyHome({
       goHome: this.go('home'), goProd: this.go('card'), mOpen: S.mOpen ? 'true' : 'false', toggleMenu: () => this.setState(s => ({ mOpen: !s.mOpen })),
       footCard: this.go('card'), footFut: this.go('fut'),
-      onFab: e => { e.preventDefault(); if (this.LANDING_PAGE_URL) window.location.href = this.LANDING_PAGE_URL; else this.flash('상담 신청 페이지 준비 중입니다.'); },
+      // Keep ?utm_… on the way to the landing page so its attribution sees the ad visit.
+      landingHref: this.LANDING_PAGE_URL ? this.LANDING_PAGE_URL + window.location.search : '#',
+      onFab: e => { e.preventDefault(); if (this.LANDING_PAGE_URL) window.location.href = this.LANDING_PAGE_URL + window.location.search; else this.flash('상담 신청 페이지 준비 중입니다.'); },
       toast: !!S.toast, toastMsg: S.toast,
       nav: navDef.map(([t, p]) => { const on = P === p; return { t, color: on ? '#D7192D' : '#1F2937', bd: on ? '#D7192D' : 'transparent', cur: on ? 'page' : 'false', go: this.go(p) }; }),
       isHome: P === 'home', isProd: inP, isAbout: P === 'about', showHero: P !== 'about',

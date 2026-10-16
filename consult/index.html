@@ -31,7 +31,7 @@
 @keyframes fiu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 @media (max-width:768px){.cl-logo{width:120px!important}.cl-card{animation:none!important}.cl-form{padding:24px 14px!important}.cl-hero{padding:130px 5vw 60px!important}.cl-h1{font-size:2.2rem!important}.cl-sub{font-size:1.15rem!important}.cl-h2{font-size:1.8rem!important}}
 @media (max-width:360px){.cl-h1{font-size:1.6rem!important}}
-@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;scroll-behavior:auto!important}}</style>
+.cl-submit{position:relative;overflow:hidden;isolation:isolate;width:100%;min-height:58px;margin-top:6px;padding:16px 20px;border:0;border-radius:12px;background:#D7192D;color:#fff;font-size:18px;font-weight:800;letter-spacing:-.2px;line-height:1.3;cursor:pointer;box-shadow:0 8px 22px rgba(215,25,45,.3);transition:background .2s,box-shadow .2s,transform .15s}.cl-submit::after{content:"";position:absolute;top:0;bottom:0;left:0;width:38%;background:linear-gradient(100deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.34) 50%,rgba(255,255,255,0) 100%);transform:translateX(-140%) skewX(-18deg);animation:clSweep 4.5s ease-in-out 1.5s infinite;pointer-events:none;z-index:0}.cl-submit-label{position:relative;z-index:1}@keyframes clSweep{0%{transform:translateX(-140%) skewX(-18deg)}24%,100%{transform:translateX(330%) skewX(-18deg)}}.cl-submit:hover{background:#B81324;box-shadow:0 10px 26px rgba(215,25,45,.38)}.cl-submit:active{transform:scale(.985)}.cl-submit:focus-visible{outline:3px solid #fff;outline-offset:3px}.cl-submit:disabled{cursor:not-allowed;opacity:.5;box-shadow:none;transform:none}.cl-submit:disabled::after{display:none}.cl-float{position:fixed;right:max(24px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));z-index:60;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:52px;padding:0 24px;border-radius:999px;background:#D7192D;color:#fff!important;font-size:16px;font-weight:800;letter-spacing:-.2px;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.22);transition:opacity .25s,transform .25s,visibility .25s,background .2s}.cl-float:hover{background:#B81324;color:#fff!important}.cl-float:focus-visible{outline:3px solid #fff;outline-offset:3px;box-shadow:0 0 0 6px #D7192D}.cl-float[data-show="false"]{opacity:0;visibility:hidden;transform:translateY(16px);pointer-events:none}@media (max-width:768px){.cl-float{left:50%;right:auto;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);min-height:54px;padding:0 32px;font-size:16.5px}.cl-float[data-show="false"]{transform:translate(-50%,16px)}.cl-submit{min-height:56px;font-size:17px}}@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;scroll-behavior:auto!important}.cl-submit::after{display:none}.cl-float{transition:none}}</style>
 </helmet>
 <div id="top">
 
@@ -82,6 +82,7 @@
   </div>
 </div></section>
 
+<a href="#contact" class="cl-float" data-show="{{ floatShow }}" aria-hidden="{{ floatHidden }}" tabindex="{{ floatTab }}" onClick="{{ toForm }}" aria-label="간편 상담 — 상담 신청 입력폼으로 이동">간편 상담</a>
 <section id="contact" style="background:#222;padding:64px 5vw"><div style="max-width:1060px;margin:0 auto">
   <div style="text-align:center;margin-bottom:30px"><h2 class="cl-h2" style="margin:0;font-family:'Noto Serif KR',serif;font-size:2rem;font-weight:700;color:#b39762;letter-spacing:.05em">PREMIUM CONSULTING</h2><p style="margin:10px 0 0;font-size:.95rem;color:rgba(255,255,255,.7)">전문 상담사가 친절하게 안내해 드립니다</p></div>
   <div class="cl-form" style="background:rgba(0,0,0,.6);border:1px solid rgba(179,151,98,.3);border-radius:8px;padding:30px 20px">
@@ -102,7 +103,7 @@
         <sc-if value="{{ needConsent }}" hint-placeholder-val="{{ true }}"><div style="color:#fca5a5;font-size:13px">개인정보 수집·이용에 동의하셔야 신청 버튼이 활성화됩니다.</div></sc-if>
         <sc-if value="{{ isOffline }}" hint-placeholder-val="{{ false }}"><div role="alert" style="background:#FEF3C7;color:#92400E;border-radius:4px;padding:12px 14px;font-size:14px;line-height:1.65"><b>현재 상담 접수 시스템 준비 중입니다.</b><br>신청 내용은 접수되지 않았습니다. 급하신 경우 02-6418-1040으로 전화해 주세요.</div></sc-if>
         <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}"><div role="alert" style="background:#FEE2E2;color:#991B1B;border-radius:4px;padding:12px 14px;font-size:14px;line-height:1.65">{{ errorMessage }}</div></sc-if>
-        <label aria-hidden="true" style="position:absolute;left:-10000px">웹사이트<input name="website" tabindex="-1" autocomplete="off"></label><button type="submit" disabled="{{ cantSubmit }}" style="margin-top:4px;width:100%;padding:15px;border:0;border-radius:4px;background:#b39762;color:#fff;font-size:17.6px;font-weight:700;cursor:pointer;opacity:{{ btnOp }};transition:background .3s" style-hover="background:#917646">{{ btnText }}</button>
+        <label aria-hidden="true" style="position:absolute;left:-10000px">웹사이트<input name="website" tabindex="-1" autocomplete="off"></label><button type="submit" class="cl-submit" disabled="{{ cantSubmit }}"><span class="cl-submit-label">{{ btnText }}</span></button>
       </form></sc-if>
     </div>
   </div>
@@ -145,15 +146,25 @@
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   CLAIMS_ORIGINAL = true;
-  state = { f: { name: '', p1: '010', p2: '', p3: '', message: '' }, consent: false, modal: false, sending: false, formState: '', receipt: '', errorMessage: '', acceptedAt: '', ready: false };
+  state = { f: { name: '', p1: '010', p2: '', p3: '', message: '' }, consent: false, modal: false, sending: false, formState: '', receipt: '', errorMessage: '', acceptedAt: '', ready: false, heroCtaSeen: true, formSeen: false };
   componentDidMount() {
     document.title = '카드매출 유동화 솔루션 | 세일사이드';
     this.attribution();
     if(window.SalesaidConsult?.enabled())window.SalesaidConsult.prepare().then(()=>this.setState({ready:true})).catch(()=>this.setState({ready:false}));
     this._kd = e => { if (!this.state.modal) return; if (e.key === 'Escape') this.closeModal(); else if (e.key === 'Tab') { const a = document.getElementById('consent-close'), b = document.getElementById('consent-ok'); if (e.shiftKey && document.activeElement === a) { e.preventDefault(); b && b.focus(); } else if (!e.shiftKey && document.activeElement === b) { e.preventDefault(); a && a.focus(); } } };
     document.addEventListener('keydown', this._kd);
+    this.watchFloat();
   }
-  componentWillUnmount() { document.removeEventListener('keydown', this._kd); }
+  // The floating 간편 상담 button only appears once the first CTA has scrolled away and while the
+  // form section is not on screen, so it never covers the form, the consent box or the keyboard.
+  watchFloat() {
+    if (!('IntersectionObserver' in window)) return;
+    const hero = document.querySelector('a[href="#contact"]:not(.cl-float)'), form = document.getElementById('contact');
+    this._io = new IntersectionObserver(items => { for (const it of items) { if (it.target === hero) this.setState({ heroCtaSeen: it.isIntersecting }); if (it.target === form) this.setState({ formSeen: it.isIntersecting }); } }, { rootMargin: '0px 0px -10% 0px' });
+    if (hero) this._io.observe(hero); else this.setState({ heroCtaSeen: false });
+    if (form) this._io.observe(form);
+  }
+  componentWillUnmount() { document.removeEventListener('keydown', this._kd); this._io?.disconnect(); }
   attribution() {
     try { let a = JSON.parse(sessionStorage.getItem('sa_attr') || 'null'); if (!a) { const q = new URLSearchParams(location.search); a = { utm_source: q.get('utm_source') || '', utm_medium: q.get('utm_medium') || '', utm_campaign: q.get('utm_campaign') || '', utm_content: q.get('utm_content') || '', from: q.get('from') || '', landing_page: location.pathname, referrer: document.referrer || '' }; sessionStorage.setItem('sa_attr', JSON.stringify(a)); } return a; } catch (x) { return {}; }
   }
@@ -197,6 +208,9 @@ class Component extends DCLogic {
     t.problems = t.problems.map((x, i, arr) => ({ t: x, bb: i < arr.length - 1 ? '1px solid #eee' : '0' }));
     return window.SalesaidPublished.applyLanding({
       t, toContact: e => { e.preventDefault(); this.scrollTo('contact'); },
+      floatShow: String(!S.heroCtaSeen && !S.formSeen && !S.modal), floatHidden: String(S.heroCtaSeen || S.formSeen || S.modal), floatTab: (!S.heroCtaSeen && !S.formSeen && !S.modal) ? '0' : '-1',
+      // Moves to the form only; submitting stays with the 상담 예약하기 button. Keyboard users land in the first field.
+      toForm: e => { e.preventDefault(); this.scrollTo('contact'); if (e.detail === 0) setTimeout(() => document.querySelector('#consult-form input[name="name"]')?.focus({ preventScroll: true }), 450); },
       table: [['대상고객', '신용카드매출이 발생하는 개인(법인)사업자'], ['연 령', '20세(군필자) 이상 ~'], ['신용등급', 'NICE, KCB 등급 무관'], ['사업년수', '3개월이상 (신규 창업자 상담후 진행가능)'], ['월 매출', '월 가맹점 카드매출 1,500만원 이상 (예외가능)'], ['장래매출 유동화\n매입금액', '500만원 ~ 5,000만원 (임대차 보증금 이내 / 5,000만원 이상 예외가능)\n일매출*10배~20배 (카드매출 및 현금매출, 배달매출 포함 / 예외가능)'], ['유동화수수료', '정율제 또는 정액제 (업종별 유동화 금액별 상이)'], ['장래매출채권 매입', '5% ~'], ['중도상환수수료', '없음'], ['유동화기간', '100일 ~ 200일 이내'], ['상환방식', '신용카드매출에서 상환'], ['취급제한', '다단계 업종, 유흥업종, 부동산관련 개발 및 시행업, 방문판매업, 무점포 사업장, 상품권, 매일 카드매출이 발생되지 않는 사업장 등']].map(([k, v]) => ({ k, lines: v.split('\n').map((t, i) => ({ t, bt: i ? '1px solid #222' : '0' })) })),
       f: F, onName: e => this.setState(s => ({ f: { ...s.f, name: e.target.value } })),
       phone2Pattern:F.p1==='010'?'[0-9]{4}':'[0-9]{3,4}', p1Opts: ['010', '011', '016', '017', '018', '019'], onP1: e => this.setState(s => ({ f: { ...s.f, p1: e.target.value } })),
