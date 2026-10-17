@@ -28,8 +28,9 @@
     const { props, preview } = parseDataProps(
       scriptEl?.getAttribute("data-props") ?? null
     );
+    const wrapped = dc.querySelector(":scope > template");
     return {
-      template: dc.innerHTML,
+      template: wrapped ? wrapped.innerHTML : dc.innerHTML,
       js: scriptEl ? scriptEl.textContent || "" : "",
       props,
       preview
@@ -40,7 +41,9 @@
     if (!openMatch) return null;
     const close = src.lastIndexOf("</x-dc>");
     if (close === -1 || close < openMatch.index) return null;
-    const template = src.slice(openMatch.index + openMatch[0].length, close);
+    let template = src.slice(openMatch.index + openMatch[0].length, close);
+    const wrapped = /^\s*<template>([\s\S]*)<\/template>\s*$/.exec(template);
+    if (wrapped) template = wrapped[1];
     const doc = new DOMParser().parseFromString(src, "text/html");
     const scriptEl = doc.querySelector("script[data-dc-script]");
     const { props, preview } = parseDataProps(
@@ -1817,7 +1820,7 @@
   // src/index.ts
   function hideRawTemplate() {
     const s = document.createElement("style");
-    s.textContent = "x-dc{display:none!important}";
+    s.textContent = "x-dc,#seo-static{display:none!important}";
     document.head.appendChild(s);
   }
   function loadScript(src, integrity) {
