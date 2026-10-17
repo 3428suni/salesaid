@@ -82,6 +82,14 @@
   </div>
 </div></section>
 
+<section style="background:#f9f9f9;padding:64px 5vw"><div style="max-width:1010px;margin:0 auto">
+  <div style="text-align:center;margin-bottom:40px"><h2 class="cl-h2" style="margin:0;font-family:'Noto Serif KR',serif;font-size:2rem;font-weight:700;color:#0f1c2d;letter-spacing:.05em">FAQ</h2><p style="margin:10px 0 0;font-size:.95rem;color:#666">자주 묻는 질문</p></div>
+  <div style="background:#fff;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,.08);overflow:hidden;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));align-items:stretch">
+    <img src="assets/img/faq.png" alt="" loading="lazy" width="900" height="502" style="display:block;width:100%;height:auto;align-self:center">
+    <div style="padding:clamp(24px,4vw,32px);display:flex;flex-direction:column;justify-content:center;gap:28px"><sc-for list="{{ t.faqs }}" as="f" hint-placeholder-count="2"><div><div style="font-weight:800;color:#b81324;font-size:1.2rem;line-height:1.5">Q. {{ f.q }}</div><div style="margin-top:12px;color:#333;font-size:1.1rem;line-height:1.7">A. {{ f.a }}</div></div></sc-for></div>
+  </div>
+</div></section>
+
 <a href="#contact" class="cl-float" data-show="{{ floatShow }}" aria-hidden="{{ floatHidden }}" tabindex="{{ floatTab }}" onClick="{{ toForm }}" aria-label="간편 상담 — 상담 신청 입력폼으로 이동">간편 상담</a>
 <sc-if value="{{ sheetOpen }}"><div class="cl-sheet-bg" onClick="{{ closeSheet }}"></div></sc-if><form class="cl-quick" data-show="{{ quickShow }}" data-sheet="{{ sheetAttr }}" aria-hidden="{{ quickHidden }}" onSubmit="{{ quickSubmit }}" aria-label="간편 상담 신청"><button type="button" class="cl-quick-x" onClick="{{ closeSheet }}" aria-label="간편 상담 닫기">×</button><div class="cl-quick-title"><b>간편 상담</b><span>무료 상담 신청</span></div><sc-if value="{{ notDone }}"><input class="cl-quick-input" required maxlength="80" name="name" value="{{ f.name }}" onInput="{{ onName }}" autocomplete="name" placeholder="성함" aria-label="간편 상담 성함"><input class="cl-quick-input" required name="quick_phone" type="tel" inputmode="numeric" maxlength="11" pattern="010[0-9]{8}|01[16789][0-9]{7,8}" title="휴대폰 번호를 - 없이 입력하세요" placeholder="연락처 (- 없이)" aria-label="간편 상담 휴대폰 번호, - 없이 입력" value="{{ qPhone }}" onInput="{{ onQuickPhone }}" autocomplete="tel-national"><input type="hidden" name="phone1" value="{{ f.p1 }}"><input type="hidden" name="phone2" value="{{ f.p2 }}"><input type="hidden" name="phone3" value="{{ f.p3 }}"><label class="cl-quick-consent"><input required name="consent_required" value="true" type="checkbox" checked="{{ consent }}" onChange="{{ onConsent }}"><span>[필수] 개인정보 수집·이용 동의</span></label><button type="button" class="cl-quick-view" onClick="{{ openModal }}">내용보기</button><label aria-hidden="true" style="position:absolute;left:-10000px">웹사이트<input name="website" tabindex="-1" autocomplete="off"></label><button type="submit" class="cl-submit cl-quick-submit" disabled="{{ cantSubmit }}"><span class="cl-submit-label">{{ quickBtnText }}</span></button></sc-if><sc-if value="{{ isDone }}"><p class="cl-quick-done" role="status">✓ 상담 예약이 접수되었습니다. 순차적으로 연락드리겠습니다.</p></sc-if><sc-if value="{{ isError }}"><p class="cl-quick-error" role="alert">{{ errorMessage }}</p></sc-if></form>
 <section id="contact" style="background:#222;padding:64px 5vw"><div style="max-width:1060px;margin:0 auto">
@@ -107,14 +115,6 @@
         <label aria-hidden="true" style="position:absolute;left:-10000px">웹사이트<input name="website" tabindex="-1" autocomplete="off"></label><button type="submit" class="cl-submit" disabled="{{ cantSubmit }}"><span class="cl-submit-label">{{ btnText }}</span></button>
       </form></sc-if>
     </div>
-  </div>
-</div></section>
-
-<section style="background:#f9f9f9;padding:64px 5vw"><div style="max-width:1010px;margin:0 auto">
-  <div style="text-align:center;margin-bottom:40px"><h2 class="cl-h2" style="margin:0;font-family:'Noto Serif KR',serif;font-size:2rem;font-weight:700;color:#0f1c2d;letter-spacing:.05em">FAQ</h2><p style="margin:10px 0 0;font-size:.95rem;color:#666">자주 묻는 질문</p></div>
-  <div style="background:#fff;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,.08);overflow:hidden;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));align-items:stretch">
-    <img src="assets/img/faq.png" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover">
-    <div style="padding:clamp(24px,4vw,32px);display:flex;flex-direction:column;justify-content:center;gap:28px"><sc-for list="{{ t.faqs }}" as="f" hint-placeholder-count="2"><div><div style="font-weight:800;color:#b81324;font-size:1.2rem;line-height:1.5">Q. {{ f.q }}</div><div style="margin-top:12px;color:#333;font-size:1.1rem;line-height:1.7">A. {{ f.a }}</div></div></sc-for></div>
   </div>
 </div></section>
 
