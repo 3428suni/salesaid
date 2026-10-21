@@ -6,7 +6,7 @@
 //   Turn it on only after the privacy policy and this consent UI are approved.
 // - Until a visitor chooses "동의", no request goes to Meta and no Meta cookie is set.
 //   "동의하지 않음" or withdrawing later stops tracking and removes the _fbp/_fbc cookies.
-// - Events: one PageView per page load (after consent) and one Lead per newly saved consult
+// - Events: one PageView per page load (after consent) and one Lead + one CompleteRegistration per newly saved consult
 //   request. Only the event name is sent. Name, phone, message and receipt number are never
 //   passed to Meta; the page only receives a one-way hash of the receipt, used here to stop duplicate Lead events.
 // - autoConfig is off (no automatic button-click/metadata events, no automatic advanced
@@ -86,7 +86,13 @@
     if (list.includes(key)) return;                                   // same receipt already counted
     list.push(key);
     try { localStorage.setItem(LEAD_KEY, JSON.stringify(list.slice(-20))); } catch { return; }
-    window.fbq('track', 'Lead', {}, { eventID: newEventId() });       // random id, unrelated to the receipt
+    // Two standard events for the same confirmed save (owner decision 2026-10-21):
+    // - Lead: the event that matches a consult request; use it for new ad sets.
+    // - CompleteRegistration (등록 완료): the running ad set was published with this optimization
+    //   event and Meta does not allow changing it, so it keeps counting results without a new ad set.
+    // Each has its own random eventID; neither carries customer data.
+    window.fbq('track', 'Lead', {}, { eventID: newEventId() });
+    window.fbq('track', 'CompleteRegistration', {}, { eventID: newEventId() });
   }
   window.addEventListener('salesaid:consult-saved', onSaved);
 
