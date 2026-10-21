@@ -1,5 +1,5 @@
 // Meta Pixel for the consult landing page: notice + opt-out (owner decision 2026-10-21, option A).
-// It runs on visit; the form notice and the privacy policy disclose it, and the footer link
+// It runs on visit; the privacy policy (linked in the footer) discloses it, and the footer link
 // '광고 추적 설정' lets a visitor refuse at any time. A refusal is remembered in this browser,
 // stops tracking at once and removes the _fbp/_fbc cookies.
 //
