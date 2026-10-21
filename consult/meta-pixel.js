@@ -1,17 +1,15 @@
-// Meta Pixel for the consult landing page, gated by a separate, optional ad-tracking consent.
-// The consent is asked in the consult forms ([선택] 광고 성과 측정 동의, also covered by 전체 동의);
-// the footer link '광고 추적 설정' opens a small panel to change it later. No banner on arrival.
+// Meta Pixel for the consult landing page: notice + opt-out (owner decision 2026-10-21, option A).
+// It runs on visit; the form notice and the privacy policy disclose it, and the footer link
+// '광고 추적 설정' lets a visitor refuse at any time. A refusal is remembered in this browser,
+// stops tracking at once and removes the _fbp/_fbc cookies.
 //
-// - Nothing loads, renders or is stored while `enabled` is false (the default in this branch).
-//   Turn it on only after the privacy policy and this consent UI are approved.
-// - Until a visitor chooses "동의", no request goes to Meta and no Meta cookie is set.
-//   "동의하지 않음" or withdrawing later stops tracking and removes the _fbp/_fbc cookies.
+// - Nothing loads, renders or is stored while `enabled` is false.
 // - Events: one PageView per page load (after consent) and one Lead + one CompleteRegistration per newly saved consult
 //   request. Only the event name is sent. Name, phone, message and receipt number are never
 //   passed to Meta; the page only receives a one-way hash of the receipt, used here to stop duplicate Lead events.
 // - autoConfig is off (no automatic button-click/metadata events, no automatic advanced
 //   matching) and no customer data is given to fbq('init').
-// - The consult form works the same whether the visitor agrees, refuses or never answers.
+// - The consult form works the same whether the visitor allows or refuses tracking.
 (() => {
   'use strict';
   const DEFAULTS = {
@@ -78,7 +76,7 @@
   }
   async function onSaved(ev) {
     const d = ev && ev.detail || {};
-    if (readConsent() !== 'granted' || !window.fbq) return;          // no consent → nothing
+    if (readConsent() === 'denied' || !window.fbq) return;           // refused → nothing
     if (d.created === false) return;                                 // server says it was a retry/duplicate
     const key = typeof d.key === 'string' && /^[0-9a-f]{24}$/.test(d.key) ? d.key : ''; // hashed receipt of a confirmed save
     if (!key) return;
@@ -132,10 +130,10 @@
     const cur = readConsent();
     const box = document.createElement('section');
     box.id = 'sa-adc'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-labelledby', 'sa-adc-t');
-    box.innerHTML = `<h2 id="sa-adc-t">광고 추적 설정 · 광고 성과 측정(Meta 픽셀) 동의 [선택]</h2>
-<p>세일사이드는 광고 성과를 측정하기 위해 Meta Platforms의 픽셀을 사용하려 합니다. 동의하시면 이 페이지 방문 사실과 상담 신청 완료 여부가 쿠키·기기 정보와 함께 Meta에 전송됩니다. <b>성함·연락처·문의 내용은 전송하지 않습니다.</b> 동의하지 않아도 상담 신청은 그대로 이용하실 수 있으며, 언제든 이 화면에서 변경할 수 있습니다. <a href="${cfg.policyUrl}" target="_blank" rel="noopener">개인정보 처리방침</a></p>
-${cur ? `<p class="now">현재 설정: ${cur === 'granted' ? '동의함' : '동의하지 않음'}</p>` : ''}
-<div class="row"><button type="button" class="no">동의하지 않음</button><button type="button" class="yes">동의</button></div>`;
+    box.innerHTML = `<h2 id="sa-adc-t">광고 추적 설정 (Meta 픽셀)</h2>
+<p>세일사이드는 광고 성과를 측정하기 위해 Meta Platforms의 픽셀을 사용합니다. 이 페이지 방문 사실과 상담 신청 완료 여부가 쿠키·기기 정보와 함께 Meta에 전송됩니다. <b>성함·연락처·문의 내용은 전송하지 않습니다.</b> 거부하시면 이 브라우저에서는 전송을 멈추며, 거부해도 상담 신청은 그대로 이용하실 수 있습니다. <a href="${cfg.policyUrl}" target="_blank" rel="noopener">개인정보 처리방침</a></p>
+<p class="now">현재 설정: ${cur === 'denied' ? '거부함' : '허용'}</p>
+<div class="row"><button type="button" class="no">거부</button><button type="button" class="yes">허용</button></div>`;
     box.querySelector('.no').addEventListener('click', () => choose('denied'));
     box.querySelector('.yes').addEventListener('click', () => choose('granted'));
     document.body.appendChild(box);
@@ -168,7 +166,7 @@ ${cur ? `<p class="now">현재 설정: ${cur === 'granted' ? '동의함' : '동�
   function start() {
     mountSettings();
     const c = readConsent();
-    if (c === 'granted') { loadPixel(); sendPageView(); }
+    if (c !== 'denied') { loadPixel(); sendPageView(); }
   }
   api.consent = readConsent;
   api.openSettings = showBanner;
