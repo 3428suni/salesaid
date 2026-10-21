@@ -1,4 +1,6 @@
 // Meta Pixel for the consult landing page, gated by a separate, optional ad-tracking consent.
+// The consent is asked in the consult forms ([선택] 광고 성과 측정 동의, also covered by 전체 동의);
+// the footer link '광고 추적 설정' opens a small panel to change it later. No banner on arrival.
 //
 // - Nothing loads, renders or is stored while `enabled` is false (the default in this branch).
 //   Turn it on only after the privacy policy and this consent UI are approved.
@@ -106,12 +108,16 @@
     const s = document.createElement('style'); s.id = 'sa-adc-style'; s.textContent = css; document.head.appendChild(s);
   }
   function closeBanner() { document.getElementById('sa-adc')?.remove(); document.documentElement.classList.remove('sa-adc-open'); }
-  function choose(state) {
+  function apply(state) {
     const before = readConsent();
     writeConsent(state);
-    closeBanner();
     if (state === 'granted') { loadPixel(); sendPageView(); }
     else if (before === 'granted' || window.fbq) revoke();
+    try { window.dispatchEvent(new CustomEvent('salesaid:ad-consent', { detail: { granted: state === 'granted' } })); } catch {}
+  }
+  function choose(state) {
+    apply(state);
+    closeBanner();
     document.getElementById('sa-adset-btn')?.focus({ preventScroll: true });
   }
   function showBanner() {
@@ -120,8 +126,8 @@
     const cur = readConsent();
     const box = document.createElement('section');
     box.id = 'sa-adc'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-labelledby', 'sa-adc-t');
-    box.innerHTML = `<h2 id="sa-adc-t">광고 성과 측정(Meta 픽셀) 동의 [선택]</h2>
-<p>세일사이드는 광고 성과를 측정하기 위해 Meta Platforms의 픽셀을 사용하려 합니다. 동의하시면 이 페이지 방문 사실과 상담 신청 완료 여부가 쿠키·기기 정보와 함께 Meta에 전송됩니다. <b>성함·연락처·문의 내용은 전송하지 않습니다.</b> 동의하지 않아도 상담 신청은 그대로 이용하실 수 있으며, 언제든 페이지 하단 ‘광고 추적 설정’에서 철회할 수 있습니다. <a href="${cfg.policyUrl}" target="_blank" rel="noopener">개인정보 처리방침</a></p>
+    box.innerHTML = `<h2 id="sa-adc-t">광고 추적 설정 · 광고 성과 측정(Meta 픽셀) 동의 [선택]</h2>
+<p>세일사이드는 광고 성과를 측정하기 위해 Meta Platforms의 픽셀을 사용하려 합니다. 동의하시면 이 페이지 방문 사실과 상담 신청 완료 여부가 쿠키·기기 정보와 함께 Meta에 전송됩니다. <b>성함·연락처·문의 내용은 전송하지 않습니다.</b> 동의하지 않아도 상담 신청은 그대로 이용하실 수 있으며, 언제든 이 화면에서 변경할 수 있습니다. <a href="${cfg.policyUrl}" target="_blank" rel="noopener">개인정보 처리방침</a></p>
 ${cur ? `<p class="now">현재 설정: ${cur === 'granted' ? '동의함' : '동의하지 않음'}</p>` : ''}
 <div class="row"><button type="button" class="no">동의하지 않음</button><button type="button" class="yes">동의</button></div>`;
     box.querySelector('.no').addEventListener('click', () => choose('denied'));
@@ -157,9 +163,9 @@ ${cur ? `<p class="now">현재 설정: ${cur === 'granted' ? '동의함' : '동�
     mountSettings();
     const c = readConsent();
     if (c === 'granted') { loadPixel(); sendPageView(); }
-    else if (c === '') showBanner();
   }
   api.consent = readConsent;
   api.openSettings = showBanner;
+  api.setConsent = state => { if (state === 'granted' || state === 'denied') apply(state); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
