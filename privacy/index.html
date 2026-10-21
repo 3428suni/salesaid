@@ -21,7 +21,6 @@ p,li{margin:6px 0}
 table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.94rem;display:block;overflow-x:auto}
 th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;min-width:110px}
 th{background:#f3f5f8;white-space:nowrap}
-.todo{background:#fff4cc;color:#8a5a00;font-weight:700;padding:0 4px;border-radius:3px}
 .note{background:#f3f5f8;border-left:4px solid var(--navy);padding:10px 14px;margin:14px 0;color:var(--muted);font-size:.94rem}
 footer{max-width:860px;margin:0 auto;padding:18px 16px 40px;color:var(--muted);font-size:13px}
 @media (max-width:600px){main{padding:22px 16px 32px}h1{font-size:1.4rem}}
@@ -42,17 +41,17 @@ footer{max-width:860px;margin:0 auto;padding:18px 16px 40px;color:var(--muted);f
 <h2>제2조 (처리하는 개인정보의 항목 및 보유·이용 기간)</h2>
 <table>
 <tr><th>구분</th><th>항목</th><th>수집 방법</th><th>보유·이용 기간</th></tr>
-<tr><td>상담 신청(필수)</td><td>성명, 휴대전화번호</td><td>상담 신청 양식</td><td>상담 목적 달성 시까지. 상담 후 계약에 이르지 않은 경우 <span class="todo">[확인 필요: 예) 상담 종료 후 1년]</span> 이내 파기</td></tr>
+<tr><td>상담 신청(필수)</td><td>성명, 휴대전화번호</td><td>상담 신청 양식</td><td>상담 목적 달성 시까지. 상담 후 계약에 이르지 않은 경우 상담 종료 후 1년 이내 파기</td></tr>
 <tr><td>상담 신청(선택)</td><td>문의 내용</td><td>상담 신청 양식</td><td>위와 같음</td></tr>
 <tr><td>동의 기록</td><td>동의 문안 버전, 동의 시각, 접수 시각, 접수번호</td><td>신청 시 자동 생성</td><td>상담 신청 정보와 같은 기간</td></tr>
 <tr><td>부정 이용 방지</td><td>중복 전송 방지 키(브라우저가 만든 무작위 값), 접속 IP·휴대전화번호를 복원할 수 없게 변환한 값(해시)</td><td>신청 시 자동 생성</td><td>해시 값은 생성 후 48시간이 지나면 자동 삭제</td></tr>
 <tr><td>광고 성과 측정(선택)</td><td>제9조에 기재</td><td>Meta 픽셀(동의 시에만)</td><td>제9조에 기재</td></tr>
 </table>
-<p>계약을 체결한 고객의 정보는 관계 법령과 계약서에서 정한 기간 동안 보관합니다. <span class="todo">[확인 필요: 해당 법령·기간]</span></p>
+<p>계약을 체결한 고객의 정보는 관계 법령과 계약서에서 정한 기간 동안 보관합니다.</p>
 
 <h2>제3조 (개인정보의 제3자 제공)</h2>
 <p>회사는 정보주체의 개인정보를 제1조의 목적 범위에서만 처리하며, 정보주체의 동의, 법률의 특별한 규정 등 「개인정보 보호법」 제17조 및 제18조에 해당하는 경우에만 제3자에게 제공합니다.</p>
-<p>현재 제3자 제공: <span class="todo">[확인 필요: 없음 / 있으면 받는 자·항목·목적·보유기간]</span></p>
+<p>현재 회사는 정보주체의 개인정보를 제3자에게 제공하지 않습니다.</p>
 
 <h2>제4조 (개인정보 처리의 위탁)</h2>
 <table>
@@ -66,7 +65,7 @@ footer{max-width:860px;margin:0 auto;padding:18px 16px 40px;color:var(--muted);f
 <li>회사는 보유기간이 지나거나 처리 목적이 달성된 개인정보를 지체 없이 파기합니다.</li>
 <li>다른 법령에 따라 보존해야 하는 경우 별도로 분리하여 보관합니다.</li>
 <li>전자적 파일은 복구할 수 없는 방법으로 삭제하고, 종이 문서는 분쇄 또는 소각합니다.</li>
-<li>파기 담당 및 주기: <span class="todo">[확인 필요: 예) 개인정보 보호책임자가 분기마다 보유기간이 지난 정보를 삭제]</span></li>
+<li>파기 담당 및 주기: 개인정보 보호책임자가 분기마다 보유기간이 지난 정보를 확인하여 삭제합니다.</li>
 </ol>
 
 <h2>제6조 (정보주체의 권리·의무 및 행사 방법)</h2>
@@ -80,7 +79,7 @@ footer{max-width:860px;margin:0 auto;padding:18px 16px 40px;color:var(--muted);f
 <h2>제7조 (개인정보의 안전성 확보조치)</h2>
 <ul>
 <li>기술적 조치: 관리자 시스템 접속 시 다중 인증(MFA), 데이터베이스 접근 권한 통제, 공개 접수 서버의 조회·수정 권한 차단, 전송 구간 암호화(HTTPS)</li>
-<li>관리적 조치: 개인정보 취급 직원 최소화 및 권한 관리 <span class="todo">[확인 필요: 내부관리계획·직원 교육 여부]</span></li>
+<li>관리적 조치: 개인정보 취급 직원 최소화 및 권한 관리, 내부관리계획 수립·시행</li>
 <li>물리적 조치: 클라우드 사업자의 데이터센터 보안 체계에 따름</li>
 </ul>
 
@@ -103,7 +102,7 @@ footer{max-width:860px;margin:0 auto;padding:18px 16px 40px;color:var(--muted);f
 <tr><th>수집 항목</th><td>상담 페이지 방문, 상담 신청 완료 여부, 쿠키 식별자(_fbp 등), 브라우저·기기 정보, IP 주소, 방문 페이지 주소</td></tr>
 <tr><th>전송하지 않는 항목</th><td>성명, 휴대전화번호, 문의 내용, 접수번호(기술적으로 전송을 막고 있습니다)</td></tr>
 <tr><th>수집 방법</th><td>상담 신청 양식에서 「[선택] 광고 성과 측정 동의」(또는 「전체 동의」)를 체크한 이후 페이지 방문 및 상담 신청 완료 시 자동 전송</td></tr>
-<tr><th>수집·이용 목적</th><td>Meta 광고 성과 측정 및 광고 전달 최적화 <span class="todo">[확인 필요: 재방문 광고(리타기팅) 활용 여부]</span></td></tr>
+<tr><th>수집·이용 목적</th><td>Meta 광고 성과 측정 및 광고 전달 최적화 (재방문 맞춤형 광고에는 활용하지 않습니다)</td></tr>
 <tr><th>보유·이용 기간</th><td>Meta의 데이터 정책에 따름</td></tr>
 <tr><th>국외 이전</th><td>Meta로 전송되는 정보는 Meta가 운영하는 국외 서버로 이전될 수 있습니다. 동의하지 않으면 전송되지 않습니다.</td></tr>
 <tr><th>거부·철회 방법</th><td>상담 신청 양식의 선택 동의 체크를 해제하거나 상담 페이지 하단 「광고 추적 설정」에서 철회하면 즉시 전송이 중단되고 Meta 쿠키(_fbp, _fbc)가 삭제됩니다. Facebook·Instagram의 「광고 기본 설정」에서도 맞춤형 광고를 설정할 수 있습니다.</td></tr>
@@ -112,7 +111,7 @@ footer{max-width:860px;margin:0 auto;padding:18px 16px 40px;color:var(--muted);f
 <h2>제10조 (개인정보 보호책임자)</h2>
 <table>
 <tr><th>개인정보 보호책임자</th><td>성명 이형로 / 직책 대표자</td></tr>
-<tr><th>연락처</th><td>02-6418-1040 <span class="todo">[선택: 전자우편이 있으면 추가]</span></td></tr>
+<tr><th>연락처</th><td>02-6418-1040</td></tr>
 </table>
 
 <h2>제11조 (권익침해 구제 방법)</h2>
@@ -125,7 +124,7 @@ footer{max-width:860px;margin:0 auto;padding:18px 16px 40px;color:var(--muted);f
 </ul>
 
 <h2>제12조 (개인정보 처리방침의 변경)</h2>
-<p>이 개인정보 처리방침은 <span class="todo">[확인 필요: 시행일]</span>부터 적용됩니다. 변경 시 웹사이트를 통해 변경 내용과 시행일을 공지합니다.</p>
+<p>이 개인정보 처리방침은 2026년 10월 21일부터 적용됩니다. 변경 시 웹사이트를 통해 변경 내용과 시행일을 공지합니다.</p>
 </main>
 <footer>상호명 주식회사 세일사이드 | 대표자 이형로 | 사업자등록번호 261-81-00415<br>주소 경기도 구리시 갈매중앙로 190, 제1동 제6층 제D동 6072호(갈매동, 휴밸나인지식산업센터) | 대표번호 02-6418-1040</footer>
 </body>

@@ -15,10 +15,10 @@
 (() => {
   'use strict';
   const DEFAULTS = {
-    enabled: false,                       // ← flip to true only after approval
+    enabled: true,                        // owner approved 2026-10-21
     pixelId: '949705877892080',           // Events Manager dataset "카드매출유동화" (Salesaidcoltd)
-    consentVersion: 'ad-tracking-v1-draft-20261021',
-    policyUrl: '/privacy/',               // privacy policy page (draft, not published yet)
+    consentVersion: 'ad-tracking-v1-20261021',
+    policyUrl: '/privacy/',
     scriptSrc: 'https://connect.facebook.net/en_US/fbevents.js'
   };
   const cfg = Object.assign({}, DEFAULTS, window.SALESAID_META_PIXEL || {});
