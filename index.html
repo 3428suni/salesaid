@@ -23,6 +23,8 @@
 <script src="assets/published-release.js"></script>
 <script src="assets/published-content.js"></script>
 <script src="assets/support.js"></script>
+<script src="consult/config.js"></script>
+<script src="consult/intake-client.js"></script>
 </head>
 <body>
 <x-dc><template>
@@ -68,7 +70,7 @@ section[style*="overflow: hidden"] span[style*="border-radius: 99px"]{padding:9p
 input,select,textarea{font-size:16px!important}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
-@media (max-width:360px){div[style*="minmax(min(220px"]{gap:8px!important}}</style>
+@media (max-width:360px){div[style*="minmax(min(220px"]{gap:8px!important}}.sa-hf{margin:4px 0 0;max-width:560px;padding:16px;background:#fff;border-radius:16px;box-shadow:0 18px 40px rgba(0,0,0,.35);color:#0B1020}.sa-hf-title{margin:0 0 10px;font-size:17px;font-weight:800;letter-spacing:-.3px}.sa-hf-row{display:flex;flex-wrap:wrap;gap:10px}.sa-hf-in{flex:1 1 160px;min-width:0;height:52px;padding:0 14px;border:1px solid #d1d5db;border-radius:10px;background:#fff;color:#111;font-size:16px;outline:none}.sa-hf-in::placeholder{color:#9ca3af}.sa-hf-in:focus{border-color:#D7192D;box-shadow:0 0 0 3px rgba(215,25,45,.15)}.sa-hf-btn{flex:1 1 100%;min-height:54px;border:0;border-radius:10px;background:#D7192D;color:#fff;font-size:17px;font-weight:800;cursor:pointer}.sa-hf-btn:hover{background:#B81324}.sa-hf-btn:disabled{opacity:.55;cursor:not-allowed}.sa-hf-btn:focus-visible{outline:3px solid #0B0F1A;outline-offset:2px}.sa-hf-note{margin:9px 2px 0;font-size:13px;line-height:1.5;color:#4b5563}.sa-hf-link{border:0;background:none;padding:0;color:inherit;font:inherit;font-weight:700;text-decoration:underline;text-underline-offset:2px;cursor:pointer}.sa-hf-done{margin:0;padding:14px 4px;font-size:17px;font-weight:800;color:#15803D;text-align:center}.sa-hf-error{margin:10px 0 0;padding:9px 12px;border-radius:8px;background:#FEE2E2;color:#991B1B;font-size:14px}.sa-hero-more{display:inline-block;margin-top:16px;color:rgba(255,255,255,.85);font-weight:700;font-size:15px;text-decoration:underline;text-underline-offset:3px}.sa-hero-sec{padding-top:56px!important}.sa-hero-l{display:flex;flex-direction:column}.sa-hero-l>*{order:3}.sa-hero-l>.sa-hero-tags,.sa-hero-l>h1{order:0}.sa-hero-l>.sa-hf{order:1;margin-top:24px}.sa-hero-l>p{order:2;margin:22px 0 0!important}.sa-hero-l>.sa-hero-more{align-self:flex-start}.fab-pill[data-hide="true"]{opacity:0;visibility:hidden;pointer-events:none}@media (max-width:768px){.sa-hero-sec{padding-top:22px!important}.sa-hero-l>.sa-hero-tags{margin-bottom:14px!important}.sa-hero-l>.sa-hf{margin-top:16px}.sa-hf-in{flex:1 1 100%}}@media (max-width:768px) and (max-height:700px){.sa-hf-title{display:none}}</style>
 </helmet>
 <div id="top" style="min-width:320px">
 
@@ -82,18 +84,17 @@ input,select,textarea{font-size:16px!important}
 </header>
 
 <sc-if value="{{ showHero }}" hint-placeholder-val="{{ true }}">
-<section style="background:radial-gradient(1000px 520px at 85% -10%,rgba(215,25,45,.28),transparent 60%),#0B0F1A;color:#fff;padding:84px 5vw 56px">
+<section class="sa-hero-sec" style="background:radial-gradient(1000px 520px at 85% -10%,rgba(215,25,45,.28),transparent 60%),#0B0F1A;color:#fff;padding:84px 5vw 56px">
   <div style="max-width:1100px;margin:0 auto">
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:56px;align-items:center">
-      <div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px">
+      <div class="sa-hero-l">
+        <div class="sa-hero-tags" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px">
           <sc-for list="{{ hero.tags }}" as="t" hint-placeholder-count="3"><span style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border-radius:99px;padding:8px 16px;font-size:14px;font-weight:600;white-space:nowrap;flex:none"><i style="width:7px;height:7px;border-radius:50%;background:#F0414F;display:block"></i>{{ t }}</span></sc-for>
         </div>
         <h1 style="margin:0;font-size:clamp(34px,5vw,52px);line-height:1.2;letter-spacing:-1.5px;font-weight:800"><sc-for list="{{ hero.lines }}" as="l" hint-placeholder-count="2"><span style="display:block;color:{{ l.c }}">{{ l.t }}</span></sc-for></h1>
         <p style="font-size:17px;color:rgba(255,255,255,.72);margin:22px 0 32px;line-height:1.7;max-width:540px">{{ hero.desc }}</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <a href="#" onClick="{{ hero.cta }}" style="background:#D7192D;color:#fff;padding:19px 36px;border-radius:12px;font-weight:700;font-size:17px;white-space:nowrap" style-hover="background:#B81324;color:#fff">{{ hero.ctaT }}</a>
-        </div>
+        <form id="home-form" class="sa-hf" onSubmit="{{ hfSubmit }}" aria-label="상담 신청"><p class="sa-hf-title">무료 상담 신청</p><sc-if value="{{ hfNotDone }}"><div class="sa-hf-row"><input class="sa-hf-in" required maxlength="80" name="name" value="{{ hfName }}" onInput="{{ hfOnName }}" autocomplete="name" placeholder="성함" aria-label="성함"><input class="sa-hf-in" required name="quick_phone" type="tel" inputmode="numeric" maxlength="11" pattern="010[0-9]{8}|01[16789][0-9]{7,8}" title="휴대폰 번호를 - 없이 입력하세요" placeholder="휴대폰 번호 (- 없이)" aria-label="휴대폰 번호, - 없이 입력" value="{{ hfPhone }}" onInput="{{ hfOnPhone }}" autocomplete="tel-national"><input type="hidden" name="phone1" value="{{ hfP1 }}"><input type="hidden" name="phone2" value="{{ hfP2 }}"><input type="hidden" name="phone3" value="{{ hfP3 }}"><input type="hidden" name="consent_required" value="true"><label aria-hidden="true" style="position:absolute;left:-10000px">웹사이트<input name="website" tabindex="-1" autocomplete="off"></label><button type="submit" class="sa-hf-btn" disabled="{{ hfSending }}">{{ hfBtn }}</button></div><p class="sa-hf-note">버튼을 누르면 <button type="button" class="sa-hf-link" onClick="{{ openConsent }}">개인정보 수집·이용(필수)</button>에 동의합니다.</p><sc-if value="{{ hfIsError }}"><p class="sa-hf-error" role="alert">{{ hfErr }}</p></sc-if></sc-if><sc-if value="{{ hfDone }}"><p class="sa-hf-done" role="status">✓ 상담 신청이 접수되었습니다. 순차적으로 연락드리겠습니다.</p></sc-if></form>
+        <a href="#" class="sa-hero-more" onClick="{{ hero.cta }}">{{ hero.ctaT }} →</a>
       </div>
       <div style="position:relative;padding:24px">
         <div style="aspect-ratio:4/3;border-radius:20px;background-image:{{ hero.bg }};background-size:cover;background-repeat:no-repeat;background-position:{{ hero.pos }};box-shadow:0 30px 60px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font:13px monospace;color:#8b93a5;text-align:center;padding:20px">{{ hero.ph }}</div>
@@ -195,7 +196,20 @@ input,select,textarea{font-size:16px!important}
     </div>
   </div>
 </footer>
-<sc-if value="{{ fabTip }}"><div class="fab-tip" role="note"><button type="button" class="fab-tip-x" onClick="{{ closeTip }}" aria-label="안내 닫기">×</button><b>카드매출 정산, <em>기다리지 마세요</em></b><span>1:1 무료 상담으로 먼저 확인하세요</span></div></sc-if><a href="{{ landingHref }}" onClick="{{ onFab }}" aria-label="무료 상담 신청 페이지로 이동" class="fab fab-pill"><span aria-hidden="true">💬</span>무료 상담 신청</a>
+<sc-if value="{{ fabTip }}"><div class="fab-tip" role="note"><button type="button" class="fab-tip-x" onClick="{{ closeTip }}" aria-label="안내 닫기">×</button><b>카드매출 정산, <em>기다리지 마세요</em></b><span>1:1 무료 상담으로 먼저 확인하세요</span></div></sc-if><a href="{{ landingHref }}" onClick="{{ onFab }}" aria-label="무료 상담 신청 페이지로 이동" class="fab fab-pill" data-hide="{{ fabHide }}" aria-hidden="{{ fabHide }}" tabindex="{{ fabTab }}"><span aria-hidden="true">💬</span>무료 상담 신청</a>
+<sc-if value="{{ cModal }}" hint-placeholder-val="{{ false }}"><div onClick="{{ closeConsent }}" style="position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px"><div role="dialog" aria-modal="true" aria-labelledby="consent-title" onClick="{{ stopConsent }}" style="background:#fff;border-radius:8px;width:min(600px,100%);max-height:min(88vh,740px);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.4)">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;background:#0f1c2d"><h2 id="consent-title" style="margin:0;font-size:17px;font-weight:700;color:#fff">[개인정보수집ㆍ이용 동의서]</h2><button id="consent-close" type="button" onClick="{{ closeConsent }}" aria-label="닫기" style="width:44px;height:44px;border:0;border-radius:6px;background:rgba(255,255,255,.12);color:#fff;font-size:18px;cursor:pointer">✕</button></div>
+<div style="padding:18px 20px;overflow-y:auto;font-size:14px;line-height:1.75;color:#374151">
+<p style="margin:0 0 12px;color:#0f1c2d;font-weight:700">[개인정보수집ㆍ이용 동의]</p>
+<p style="margin:0 0 14px">(주)세일사이드의 상담 업무와 관련하여 개인정보를 수집 이용하거나 제3자에게 제공하고자 하는 경우에는 「개인정보 보호법」 제15조 제1항 제1호, 제17조 제1항 제1호, 제24조 제1항 제1호, 제24조의2, 「신용정보의 이용 및 보호에 관한 법률」 제15조 제2항, 제32조 제1항, 제33조 및 제34조에 따라 본인의 동의가 필요합니다. 이에 금전채권신탁 선정산 상담 업무와 관련하여 아래와 같이 개인정보 수집 이용에 동의합니다.</p>
+<p style="margin:0 0 6px;font-weight:700;color:#917646">1. 수집 이용에 관한 사항</p>
+<p style="margin:0 0 2px;font-weight:700">① 수집 이용 목적</p><ul style="margin:0 0 10px;padding-left:20px"><li>(주)세일사이드의 상담 및 계약 관련 안내 목적</li></ul>
+<p style="margin:0 0 2px;font-weight:700">② 수집 이용 할 항목</p><ul style="margin:0 0 10px;padding-left:20px"><li>필수: 성명, 연락처(휴대폰 번호)</li><li>선택: 문의 내용</li></ul>
+<p style="margin:0 0 2px;font-weight:700">③ 보유 이용 기간</p><ul style="margin:0 0 10px;padding-left:20px"><li>수집 이용 목적을 달성 할 때까지</li></ul>
+<p style="margin:0 0 2px;font-weight:700">④ 동의를 거부할 권리 및 동의 거부 시 불이익</p><ul style="margin:0;padding-left:20px"><li>귀하는 동의를 거부할 권리가 있으나, 동의가 없을 경우 다이렉트 상담 진행이 불가능할 수 있음을 알려 드립니다.</li></ul>
+</div>
+<div style="display:flex;gap:10px;padding:12px 18px;border-top:1px solid #eee"><button id="consent-ok" type="button" onClick="{{ closeConsent }}" style="flex:1;height:48px;border-radius:4px;border:1px solid #d1d5db;background:#fff;font:700 15px Pretendard,sans-serif;cursor:pointer">닫기</button></div>
+</div></div></sc-if>
 <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}"><div role="status" style="position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:#0B0F1A;color:#fff;padding:13px 22px;border-radius:12px;font-size:14px;font-weight:600;box-shadow:0 14px 34px rgba(0,0,0,.3);z-index:70;max-width:90vw;text-align:center">{{ toastMsg }}</div></sc-if>
 </div>
 </template></x-dc>
@@ -220,7 +234,7 @@ class Component extends DCLogic {
   LANDING_PAGE_URL = 'consult/';
   PAYMENT_TIMING_CONFIRMED = false;
   BANK_EXPERIENCE_CONFIRMED = false;
-  state = { page: 'home', dd: false, mOpen: false, toast: '', fabTip: false };
+  state = { page: 'home', dd: false, mOpen: false, toast: '', fabTip: false, hf: { name: '', raw: '' }, hfState: '', hfErr: '', hfSending: false, cModal: false, hfSeen: true };
   ROUTES = { home: 'home', card: 'products/card-sales', fut: 'products/future-receivables', about: 'about' };
   SEO = {
     home: ['세일사이드 | 주식회사 세일사이드 – 금전채권신탁 선정산', '주식회사 세일사이드 공식 홈페이지입니다. 카드 매출채권을 신탁하는 금전채권신탁 선정산(확정매출·장래매출)을 안내합니다. 1:1 무료 상담을 신청하세요.'],
@@ -235,8 +249,9 @@ class Component extends DCLogic {
     this.setState({ page: p }, () => this.seo(p));
     let closed = false; try { closed = sessionStorage.getItem('sa_fab_tip') === 'closed'; } catch { /* storage blocked: show once per load */ }
     if (!closed) this._tip = setTimeout(() => this.setState({ fabTip: true }), 2500);
+    this.watchHeroForm();
   }
-  componentWillUnmount() { clearTimeout(this._to); clearTimeout(this._tip); }
+  componentWillUnmount() { clearTimeout(this._to); clearTimeout(this._tip); clearInterval(this._hfTimer); window.removeEventListener('scroll', this._hfCheck); window.removeEventListener('resize', this._hfCheck); }
   seo(p) {
     const [t, d] = this.SEO[p]; document.title = t;
     let m = document.querySelector('meta[name="description"]');
@@ -261,6 +276,25 @@ class Component extends DCLogic {
       this.setState({ page, dd: false, mOpen: false }, () => { if (!same) { try { history.replaceState(null, '', '#' + this.ROUTES[page]); } catch (x) {} this.seo(page); window.scrollTo({ top: 0, behavior: 'auto' }); } if (anchor) requestAnimationFrame(() => requestAnimationFrame(() => this.scrollTo(anchor))); });
     };
   }
+  // Homepage first-screen form: same transport as /consult/ (consult/intake-client.js); consent time = button press.
+  async hfSend(form) {
+    if (!window.SalesaidConsult?.enabled()) { this.setState({ hfState: 'error', hfErr: '현재 상담 접수 시스템 준비 중입니다. 급하신 경우 02-6418-1040으로 전화해 주세요.' }); return; }
+    if (this._hfPending) return; this._hfPending = true;
+    const data = new FormData(form), copied = document.createElement('form');
+    for (const [name, value] of data) { const input = document.createElement('input'); input.name = name; input.value = String(value); copied.append(input); }
+    this.setState({ hfSending: true, hfState: '', hfErr: '' });
+    try { await window.SalesaidConsult.submit(copied, new Date().toISOString()); this.setState({ hfState: 'done', hf: { name: '', raw: '' } }); }
+    catch (e) { this.setState({ hfState: 'error', hfErr: e.message || '접수하지 못했습니다. 같은 내용으로 다시 시도하세요.' }); }
+    finally { this._hfPending = false; this.setState({ hfSending: false }); }
+  }
+  // The floating 무료 상담 신청 button hides while the first-screen form is on screen (it would cover it on phones).
+  watchHeroForm() {
+    const check = () => { const el = document.getElementById('home-form'), r = el && el.getBoundingClientRect(), seen = !!r && r.bottom > 0 && r.top < window.innerHeight; if (seen !== this.state.hfSeen) this.setState({ hfSeen: seen }); };
+    this._hfCheck = () => { cancelAnimationFrame(this._hfRaf); this._hfRaf = requestAnimationFrame(check); };
+    window.addEventListener('scroll', this._hfCheck, { passive: true }); window.addEventListener('resize', this._hfCheck);
+    this._hfTimer = setInterval(check, 700); check();
+  }
+  closeConsent() { this.setState({ cModal: false }, () => { const o = this._cOpener; this._cOpener = null; if (o && o.isConnected) o.focus({ preventScroll: true }); }); }
   renderVals() {
     const S = this.state, P = S.page;
     const B = (yes, no) => this.BANK_EXPERIENCE_CONFIRMED ? yes : no;
@@ -279,17 +313,25 @@ class Component extends DCLogic {
     };
     const navDef = [['홈', 'home'], ['확정매출 선정산', 'card'], ['장래매출 선정산', 'fut'], ['회사소개', 'about']];
     const inP = P === 'card' || P === 'fut';
+    const HD = S.hf.raw, HOK = /^01[016789]/.test(HD), HP = !HOK ? ['010', '', ''] : HD.length === 10 ? [HD.slice(0, 3), HD.slice(3, 6), HD.slice(6)] : [HD.slice(0, 3), HD.slice(3, 7), HD.slice(7, 11)];
     return window.SalesaidPublished.applyHome({
       goHome: this.go('home'), goProd: this.go('card'), mOpen: S.mOpen ? 'true' : 'false', toggleMenu: () => this.setState(s => ({ mOpen: !s.mOpen })),
       footCard: this.go('card'), footFut: this.go('fut'),
       // Keep ?utm_… on the way to the landing page so its attribution sees the ad visit.
       landingHref: this.LANDING_PAGE_URL ? this.LANDING_PAGE_URL + (window.location?.search || '') : '#',
-      fabTip: S.fabTip, closeTip: () => { try { sessionStorage.setItem('sa_fab_tip', 'closed'); } catch { /* per-load only */ } this.setState({ fabTip: false }); },
+      fabTip: S.fabTip && !(S.hfSeen && P !== 'about'), closeTip: () => { try { sessionStorage.setItem('sa_fab_tip', 'closed'); } catch { /* per-load only */ } this.setState({ fabTip: false }); },
       onFab: e => { e.preventDefault(); if (this.LANDING_PAGE_URL) window.location.href = this.LANDING_PAGE_URL + (window.location.search || ''); else this.flash('상담 신청 페이지 준비 중입니다.'); },
       toast: !!S.toast, toastMsg: S.toast,
       nav: navDef.map(([t, p]) => { const on = P === p; return { t, color: on ? '#D7192D' : '#1F2937', bd: on ? '#D7192D' : 'transparent', cur: on ? 'page' : 'false', go: this.go(p) }; }),
       isHome: P === 'home', isProd: inP, isAbout: P === 'about', showHero: P !== 'about',
       hero: Object.assign({ pos: 'center', ph: '' }, heros[P] || heros.home), pg: PG[P] || PG.card,
+      hfName: S.hf.name, hfPhone: S.hf.raw, hfP1: HP[0], hfP2: HP[1], hfP3: HP[2], hfSending: S.hfSending, hfBtn: S.hfSending ? '접수 중…' : '동의하고 상담 신청',
+      hfNotDone: S.hfState !== 'done', hfDone: S.hfState === 'done', hfIsError: S.hfState === 'error', hfErr: S.hfErr,
+      hfOnName: e => this.setState({ hf: { ...this.state.hf, name: e.target.value } }),
+      hfOnPhone: e => this.setState({ hf: { ...this.state.hf, raw: e.target.value.replace(/\D/g, '').slice(0, 11) } }),
+      hfSubmit: e => { e.preventDefault(); if (S.hfSending) return; return this.hfSend(e.currentTarget || e.target); },
+      fabHide: String(S.hfSeen && P !== 'about'), fabTab: S.hfSeen && P !== 'about' ? '-1' : '0',
+      cModal: S.cModal, openConsent: () => { this._cOpener = document.activeElement; this.setState({ cModal: true }, () => document.getElementById('consent-close')?.focus()); }, closeConsent: () => this.closeConsent(), stopConsent: e => e.stopPropagation(),
       svcCards: [{ l: 'PRODUCT 01', t: '확정매출 선정산', d: this.PAYMENT_TIMING_CONFIRMED ? '카드 결제 후 정산을 기다리는 카드 매출채권을 금전채권신탁으로 신탁해, 정산일보다 먼저 지급받아 운영자금으로 활용할 수 있도록 돕습니다.' : '카드 결제 후 아직 입금되지 않은 카드 매출채권을 금전채권신탁으로 신탁해, 정산일보다 먼저 활용할 수 있도록 돕는 서비스입니다.', bg: 'url(assets/img/img-1.png)', go: this.go('card') }, { l: 'PRODUCT 02', t: '장래매출 선정산', d: '앞으로 발생할 카드 매출채권을 금전채권신탁으로 신탁하고, 사업장의 실제 매출 실적을 바탕으로 선정산 가능 여부를 검토하는 서비스입니다.', bg: 'url(assets/img/img-5.png)', go: this.go('fut') }],
       expertise: [{ n: '01', t: B('은행권 실무 경험', '전문 인력의 직접 상담'), d: B('은행권 근무 경험을 갖춘 전문 인력이 고객 상담에 직접 참여하여 사업장의 매출 현황과 자금 운용 상황을 함께 살펴봅니다.', '전문 인력이 고객 상담에 직접 참여하여 사업장의 매출 현황과 자금 운용 상황을 함께 살펴봅니다.') }, { n: '02', t: '명확하고 투명한 안내', d: '복잡한 금융 용어와 진행 절차를 고객이 이해하기 쉽게 설명하고, 이용 조건을 충분히 확인할 수 있도록 돕습니다.' }, { n: '03', t: '소상공인(사업자) 중심의 상담', d: '사업장의 상황과 필요 자금의 목적을 이해하고, 고객이 적합한 자금 활용 방법을 검토할 수 있도록 안내합니다.' }],
       bankNote: B('※ 상담 인력의 은행권 근무 경험에 대한 설명이며, 금융기관의 제휴·승인·보증을 의미하지 않습니다.', ''),
