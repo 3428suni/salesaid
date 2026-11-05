@@ -156,7 +156,7 @@
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   CLAIMS_ORIGINAL = false;
-  state = { f: { name: '', p1: '010', p2: '', p3: '', message: '' }, consent: false, modal: false, sending: false, formState: '', receipt: '', errorMessage: '', acceptedAt: '', ready: false, heroCtaSeen: true, formSeen: false, footerSeen: false, quickFocus: false, qRaw: '', sheetOpen: false, pChoice: '', mChoice: '', xNeed: false, xModal: '' };
+  state = { f: { name: '', p1: '010', p2: '', p3: '', message: '' }, consent: false, modal: false, sending: false, formState: '', receipt: '', errorMessage: '', acceptedAt: '', ready: false, heroCtaSeen: true, formSeen: false, footerSeen: false, quickFocus: false, qRaw: '', sheetOpen: false, pChoice: 'yes', mChoice: 'yes', xNeed: false, xModal: '' };
   componentDidMount() {
     document.title = '소상공인(사업자)을 위한 안정적인 자금 흐름 지원 | 세일사이드';
     this.attribution();
